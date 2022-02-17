@@ -1,0 +1,38 @@
+
+.card-text, .card-footer {
+  word-wrap: break-word;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
+}
+
+.card-header{
+  width: auto;
+}
+
+.card {
+  margin-bottom: 4rem;
+  background-color: rgb(247, 247, 247);
+  height: 100%;
+  width: 100%;
+}
+
+.card-body {
+  overflow: hidden;
+}
+
+.card-title {
+  font-weight: 900;
+  flex-grow: 1;
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+}
+
+.card-description {
+  font-size: 13px;
+}
+
+.rbt-menu{
+  max-height: 55vh!important;
+}
