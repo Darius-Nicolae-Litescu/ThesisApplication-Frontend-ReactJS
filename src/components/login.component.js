@@ -25,6 +25,7 @@ class Login extends Component {
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
+    this.refreshPage = this.refreshPage.bind(this);
 
     this.state = {
       username: "",
@@ -45,6 +46,10 @@ class Login extends Component {
     });
   }
 
+  refreshPage() {
+    window.location.reload();
+  }
+
   handleLogin(e) {
     e.preventDefault();
 
@@ -60,7 +65,6 @@ class Login extends Component {
       dispatch(login(this.state.username, this.state.password))
         .then(() => {
           history.push("/profile");
-          window.location.reload();
         })
         .catch(() => {
           this.setState({
@@ -72,6 +76,7 @@ class Login extends Component {
         loading: false,
       });
     }
+    this.refreshPage();
   }
 
   render() {

@@ -6,12 +6,12 @@ import Register from "./register.component";
 import Home from "./home.component";
 import BoardUser from "./board-user.component";
 import BoardModerator from "./board-moderator.component";
-import SearchAutocomplete from "./search-autocomplete.component";
-import SearchResult from "./search-result.component"
+import SearchAutocomplete from "./search/search-autocomplete.component";
+import SearchResult from "./search/search-result.component"
 import BoardAdmin from "./board-admin.component";
-import EditProfile from "./useractions/edit-user-details.component"
+import EditProfile from "./user/edit-user-details.component"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap'
-import Profile from './profile.component';
+import Profile from './user/profile.component';
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import { connect } from "react-redux";

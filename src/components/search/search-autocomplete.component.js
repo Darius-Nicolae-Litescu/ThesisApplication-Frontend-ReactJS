@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap-typeahead';
 import ReactDOM from 'react-dom';
 import './live-search-bar.css';
-import SearchService from '../services/search.service'
+import SearchService from '../../services/search.service'
 import { Card } from 'react-bootstrap'
 
 import 'react-bootstrap-typeahead/css/Typeahead.css';

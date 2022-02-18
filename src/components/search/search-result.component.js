@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
-import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
+import UserService from "../../services/user.service";
+import EventBus from "../../common/EventBus";
 import SearchAutocomplete from "./search-autocomplete.component";
 import PaginationCard from "./pagination-cards-search.component"
-import SearchService from '../services/search.service'
+import SearchService from '../../services/search.service'
 import { Card, Container } from 'react-bootstrap'
 
 export default class SearchResult extends Component {
