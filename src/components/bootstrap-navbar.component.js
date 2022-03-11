@@ -15,6 +15,8 @@ import Profile from './user/profile.component';
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import { connect } from "react-redux";
+import Story from "./main/story/story.component";
+import StoryTask from "./main/storytask/story-task.component";
 
 import { history } from '../helpers/history';
 
@@ -123,6 +125,8 @@ class BootstrapNavbar extends React.Component {
                             <Route path="/user" element={<BoardUser />} />
                             <Route path="/mod" element={<BoardModerator />} />
                             <Route path="/admin" element={<BoardAdmin />} />
+                            <Route path="story/:storyId" element={<Story />} />
+                            <Route path="story-task/:storyTaskId" element={<StoryTask />} />
                         </Routes>
                     </div>
                     <AuthVerify logOut={this.logOut} />

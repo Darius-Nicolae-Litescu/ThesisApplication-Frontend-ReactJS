@@ -5,7 +5,7 @@ import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
 const Form = withTheme(Bootstrap4Theme);
 
 const JSONSchema = {
-    "title": "Insert or update position",
+    "title": "Insert or update a position",
     "description": "You can update or insert a position",
     "type": "object",
     "required": [
@@ -40,7 +40,6 @@ function InsertUpdatePositionForm() {
     return (
         <div className="InsertOrUpdatePosition">
             <Form schema={JSONSchema} uiSchema={UISchema} />
-
         </div>
     );
 }

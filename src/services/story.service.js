@@ -19,11 +19,36 @@ class StoryService {
       });
   }
 
+  addComment(content, storyId, attachments, onUploadProgress) {
+    let formData = new FormData();
+    formData.append("storyId", storyId);
+    formData.append("content", content);
+    formData.append("commentAttachments", attachments);
+    return axios.post("story/comment", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      onUploadProgress,
+    });
+  }
+
   getStories(page,size) {
     return axios.get('story/', null, { params: {
       page,
       size
     }})
+    .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      });
+  }
+
+  
+  getStory(storyId) {
+    return axios.get('story/' + storyId, null)
     .then((response) => {
         response.data = response.data.success;
         return response.data;
@@ -47,4 +72,4 @@ class StoryService {
 
 }
 
-export default new CategoryService();
+export default new StoryService();

@@ -1,0 +1,21 @@
+.comment-font {
+    font-size: 24px;
+  }
+  
+  @media (max-width: 1921px) {
+    .comment-font {
+      font-size: 16px;
+    }
+  }
+  
+  @media (max-width: 1441px) {
+    .comment-font {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .comment-font {
+      font-size: 11px;
+    }
+  }

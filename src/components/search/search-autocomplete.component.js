@@ -79,7 +79,6 @@ export default class SearchAutocomplete extends Component {
                 ignoreDiacritics={true}
                 minLength={2}
                 onSearch={this.searchValues}
-                placeholder="Insert text to search"
                 selectHintOnEnter={true}
                 promptText="Searching"
                 searchText="Searching"

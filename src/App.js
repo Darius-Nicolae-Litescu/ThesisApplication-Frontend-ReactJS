@@ -18,7 +18,6 @@ import BoardAdmin from "./components/board-admin.component";
 import BootstrapNavbar from "./components/bootstrap-navbar.component";
 
 
-
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 
