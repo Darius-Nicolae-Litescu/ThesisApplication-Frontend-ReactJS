@@ -114,7 +114,7 @@ class BootstrapNavbar extends React.Component {
                     </Navbar>
 
                     <br />
-                    <div className="container mt-3">
+                    <div className="container mt-3" style={{position: "relative"}}>
                         <Routes>
                             <Route exact path="/" element={<Home />} />
                             <Route exact path="/login" element={<Login />} />

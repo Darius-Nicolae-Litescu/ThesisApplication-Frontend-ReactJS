@@ -1,27 +1,26 @@
 import { useEffect, useRef, useReducer } from 'react';
 
-import StoryTaskService from "../../../services/story-task.service";
+import StoryTaskService from "../../../../services/story-task.service";
 
-export const FetchStoryTaskData = (storyId) => {
+export const UpdateStoryTaskGeneralInfo = (storyTaskId, storyPoints, assignedToUsername, status, finishedAt) => {
 
     const initialState = {
-        status: 'idle',
+        requestStatus: 'idle',
         error: null,
         data: [],
     };
 
     useEffect(() => {
         let cancelRequest = false;
-        if (isNaN(storyId)) {
+        if (isNaN(storyTaskId)) {
             return;
         }
 
-        const getStoryTaskData = async () => {
+        const updateStoryTaskGeneralInfo = async () => {
             dispatch({ type: 'FETCHING' });
-            StoryTaskService.getStoryTask(storyId).then(
+            StoryTaskService.updateStoryTaskGeneralInfo(storyTaskId, storyPoints, assignedToUsername, status, finishedAt).then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -30,8 +29,7 @@ export const FetchStoryTaskData = (storyId) => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);
@@ -40,7 +38,7 @@ export const FetchStoryTaskData = (storyId) => {
             )
         };
 
-        getStoryTaskData();
+        updateStoryTaskGeneralInfo();
 
         return function cleanup() {
             cancelRequest = true;
@@ -50,11 +48,11 @@ export const FetchStoryTaskData = (storyId) => {
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
             case 'FETCHING':
-                return { ...initialState, status: 'fetching' };
+                return { ...initialState, requestStatus: 'fetching' };
             case 'FETCHED':
-                return { ...initialState, status: 'fetched', data: action.payload };
+                return { ...initialState, requestStatus: 'fetched', data: action.payload };
             case 'FETCH_ERROR':
-                return { ...initialState, status: 'error', error: action.payload };
+                return { ...initialState, requestStatus: 'error', error: action.payload };
             default:
                 return state;
         }

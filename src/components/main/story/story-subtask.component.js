@@ -11,7 +11,7 @@ export default function StorySubtask(props) {
         <Container style={{ display: "inline", marginTop: 20 }}>
           <div>
             <h4>{title}</h4>
-            <div className="comment-font" style={{ lineHeight: "22px", fontWeight: "400", color: "darkslategrey", letterSpacing: "0.3px" }} className="shadow-lg p-3 mb-5 bg-white rounded">
+            <div className="comment-font" style={{ lineHeight: "22px", fontWeight: "400", color: "darkslategrey", letterSpacing: "0.3px" }}>
               {description &&
                 description
                   .split('\n')

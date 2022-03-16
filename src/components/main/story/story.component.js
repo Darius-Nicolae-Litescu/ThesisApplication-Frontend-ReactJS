@@ -43,13 +43,12 @@ function App() {
                                 <Moment format="YYYY-MM-DD HH:mm">{data.createdAt}</Moment>
                             </div>
                             <Card.Body>
-                                <Card.Text>
+
                                     <br />
                                     {data.description &&
                                         data.description
                                             .split('\n')
                                             .map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-                                </Card.Text>
 
                                 <div className="card-block px-2">
                                     <Card.Title style={{maxHeight: '20%', overflow: 'auto'}}>

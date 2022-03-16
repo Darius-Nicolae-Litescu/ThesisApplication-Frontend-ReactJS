@@ -19,12 +19,14 @@ class StoryTaskService {
       });
   }
 
-  addComment(content, storyTaskId, attachments, onUploadProgress) {
+  addComment(content, storyTaskId, attachments) {
     let formData = new FormData();
     formData.append("storyTaskId", storyTaskId);
     formData.append("content", content);
-    for (let i = 0; i < attachments.length; i++) {
-      formData.append("commentAttachments", attachments[i]);
+    if (attachments) {
+      for (let i = 0; i < attachments.length; i++) {
+        formData.append("commentAttachments", attachments[i]);
+      }
     }
     console.log(storyTaskId, content, attachments)
     console.log(formData);
@@ -40,6 +42,33 @@ class StoryTaskService {
     })
       .catch(function (error) {
         console.log(JSON.stringify(error))
+      });
+  }
+
+  updateStoryTaskGeneralInfo(id, storyPoints, assignedToUsername, status, finishedAt) {
+    return axios
+      .put('story/task/general', {
+        id,
+        storyPoints,
+        assignedToUsername,
+        status,
+        finishedAt
+      }).then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      });
+  }
+
+  updateStoryTaskTitleAndDescription(id, title, description) {
+    return axios
+      .put('story/task/details', {
+        id,
+        title,
+        description
+      })
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
       });
   }
 

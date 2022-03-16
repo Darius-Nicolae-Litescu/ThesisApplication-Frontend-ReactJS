@@ -7,7 +7,7 @@ import { useParams } from "react-router";
 import { withTheme } from '@rjsf/core';
 import StoryTaskService from "../../../services/story-task.service";
 import TextareaAutosize from 'react-textarea-autosize';
-
+import isEmpty from "../../../helpers/stringUtils"
 
 
 
@@ -20,8 +20,8 @@ export default class AddComment extends Component {
     this.state = {
       selectedFiles: undefined,
       currentFiles: undefined,
-      comment: null,
-      progress: 0,
+      message: null,
+      comment: "",
       fileInfos: [],
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,44 +38,44 @@ export default class AddComment extends Component {
   };
 
   handleChange(event) {
+    if (this.state.comment === '') {
+      this.setState({ message: null });
+    }
     this.setState({
       comment: event.target.value
     });
   }
 
   handleSubmit({ formData }) {
+    if (isEmpty(this.state.comment)) {
+      this.setState({ message: "Text box cannot be empty" });
+      return;
+    }
+
     console.log(formData);
 
     const storyTaskId = this.props.storyTaskId;
     const files = this.state.currentFiles;
     const comment = this.state.comment;
 
-    StoryTaskService.addComment(comment, storyTaskId, files, (event) => {
-      this.setState({
-        progress: Math.round((100 * event.loaded) / event.total),
-      });
-    })
-      .then((response) => {
-        this.props.refreshComments(response);
-        console.log(response);
+    if (this.state.comment) {
+      this.state.message = ""
+      StoryTaskService.addComment(comment, storyTaskId, files)
+        .then((response) => {
+          this.props.refreshComments(response);
+          console.log(response);
 
-      })
-      .then((files) => {
-        this.setState({
-          fileInfos: files.data,
+        })
+        .catch(() => {
+          this.setState({
+            message: "Could not add comment!",
+          });
         });
-      })
-      .catch(() => {
-        this.setState({
-          progress: 0,
-          message: "Could not upload the file!",
-          currentFile: undefined,
-        });
+      this.setState({
+        selectedFiles: undefined,
       });
-    this.setState({
-      selectedFiles: undefined,
-    });
-  };
+    };
+  }
 
   render() {
     return (
@@ -87,6 +87,9 @@ export default class AddComment extends Component {
           <br></br>
           <Button onClick={this.handleSubmit} variant="primary">Add comment</Button>{' '}
         </div>
+        {this.state.message && (
+          <p className="error"> {this.state.message} </p>
+        )}
       </Container>
     );
   }

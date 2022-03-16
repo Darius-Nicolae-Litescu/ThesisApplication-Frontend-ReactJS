@@ -37,7 +37,7 @@ export const CommentList = (props) => {
         ) : null}
 
         {comments.map((comment, index) => (
-          <Comment key={index} comment={comment} />
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
       :
