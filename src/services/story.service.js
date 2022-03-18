@@ -1,7 +1,7 @@
 import axios from "../axios";
 
 class StoryService {
-  addStory(description,category,priority) {
+  addStory(description, category, priority) {
     return axios
       .post('story/', {
         data: {
@@ -19,25 +19,40 @@ class StoryService {
       });
   }
 
-  addComment(content, storyId, attachments, onUploadProgress) {
+  addComment(content, storyId, attachments) {
     let formData = new FormData();
     formData.append("storyId", storyId);
     formData.append("content", content);
-    formData.append("commentAttachments", attachments);
-    return axios.post("story/comment", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      onUploadProgress,
-    });
+    if (attachments) {
+      for (let i = 0; i < attachments.length; i++) {
+        formData.append("commentAttachments", attachments[i]);
+      }
+    }
+    console.log(storyId, content, attachments)
+    console.log(formData);
+
+    return axios({
+      method: "post",
+      url: "story/comment",
+      data: formData,
+      headers: { 'Content-Type': `multipart/form-data; boundary=${formData._boundary}` },
+    }).then((response) => {
+      response.data = response.data.success;
+      return response.data;
+    })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      });
   }
 
-  getStories(page,size) {
-    return axios.get('story/', null, { params: {
-      page,
-      size
-    }})
-    .then((response) => {
+  getStories(page, size) {
+    return axios.get('story/', null, {
+      params: {
+        page,
+        size
+      }
+    })
+      .then((response) => {
         response.data = response.data.success;
         return response.data;
       })
@@ -46,10 +61,10 @@ class StoryService {
       });
   }
 
-  
+
   getStory(storyId) {
     return axios.get('story/' + storyId, null)
-    .then((response) => {
+      .then((response) => {
         response.data = response.data.success;
         return response.data;
       })

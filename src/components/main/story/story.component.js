@@ -8,20 +8,53 @@ import {
 } from "react-router-dom";
 import Moment from 'react-moment';
 import { Card, Container, ListGroup, Spinner, Divider } from 'react-bootstrap'
-import { FetchStoryData } from "./story-fetch";
-import CommentList from "./comment-list.component";
+import { FetchStoryData } from "./hooks/story-fetch";
+import { CommentList } from "./comment-list.component";
 import SubtaskList from "./story-subtask-list.component";
+import TextareaAutosize from 'react-textarea-autosize';
+import StoryGeneralInfo from './story-general-info.component'
 
 function App() {
-    const [isLoading, setIsLoading] = useState('');
+
     const { storyId } = useParams();
+
     const { status, data, error } = FetchStoryData(storyId);
+
+    const [currentData, setCurrentData] = useState([]);
+
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+    const [isEditActive, setIsEditActive] = useState(false);
+    const [isDeleteActive, setDeleteActive] = useState('');
+
 
     const initialState = {
         status: 'idle',
         error: null,
         data: [],
     };
+
+    useEffect(() => {
+        /*
+        if (data.title) {
+            setTitle(data.title);
+        }
+        if (data.description) {
+            setDescription(data.description);
+        }
+        */
+    }, [data])
+
+    function updateData(updatedData) {
+        setCurrentData(updatedData);
+    }
+
+    
+    function toggleEditMode() {
+        setIsEditActive(!isEditActive);
+        setDeleteActive(!isDeleteActive);
+    }
 
     return (
         <div>
@@ -32,6 +65,10 @@ function App() {
             {status === 'fetching' && <div className="loading"></div>}
             {status === 'fetched' && (
                 <>
+                    <StoryGeneralInfo updateData={updateData} storyGeneralInfo={{
+                        storyId: storyId, createdBy: data.createdBy, priority: data.priority, softwareApplication: data.softwareApplication,
+                        isFinished: data.isFinished, totalStoryPoints: data.totalStoryPoints
+                    }}></StoryGeneralInfo>
                     <Container style={{ width: '100%', height: '100%' }}>
                         <Card
                             bg="light"
@@ -43,21 +80,18 @@ function App() {
                                 <Moment format="YYYY-MM-DD HH:mm">{data.createdAt}</Moment>
                             </div>
                             <Card.Body>
-
-                                    <br />
-                                    {data.description &&
-                                        data.description
-                                            .split('\n')
-                                            .map((paragraph, index) => <p key={index}>{paragraph}</p>)}
-
+                                <br />
+                                <TextareaAutosize
+                                    className="disabled" disabled={!isEditActive} onChange={e => setDescription(e.target.value)} value={data.description} style={{ width: "100%" }} maxRows={50} minRows={5}>
+                                </TextareaAutosize>
                                 <div className="card-block px-2">
-                                    <Card.Title style={{maxHeight: '20%', overflow: 'auto'}}>
+                                    <Card.Title style={{ maxHeight: '20%', overflow: 'auto' }}>
                                         <SubtaskList storySubtasks={data.storySubtasks}></SubtaskList>
                                     </Card.Title>
                                     <Card.Title>
 
                                         <Card.Footer>
-                                            <CommentList comments={data.comments}></CommentList>
+                                            <CommentList storyId={storyId} comments={data.comments}></CommentList>
                                         </Card.Footer>
                                     </Card.Title>
                                 </div>
@@ -65,8 +99,9 @@ function App() {
                         </Card>
                     </Container>
                 </>
-            )}
-        </div>)
+            )
+            }
+        </div >)
 };
 
 export default App;

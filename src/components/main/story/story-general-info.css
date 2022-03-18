@@ -1,0 +1,46 @@
+.card-img-top {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.card-title{
+    font-size:20px;
+    font-weight: unset;
+}
+
+.input-general{
+    width: 100px;
+}
+
+label {
+    margin-right: 10px;
+    display: inline-block;
+    text-align: right;
+}
+
+.input-text.color{
+    color: black;
+}
+
+.card{
+    text-align: justify;
+    text-align-last: left;
+    border-radius: 15px;
+    border: 4px black;
+    padding: 0px;
+    align-content: start;
+    background-color: white;
+}
+
+.priority-color{
+    margin-bottom: 6px;
+    border-radius: 25px;
+    padding: 2px;
+    align-content: start;
+    padding-inline: inherit;
+    position: relative;
+    text-align: justify;
+    text-align-last: right;
+    color: white;
+}

@@ -34,7 +34,7 @@ export default function Comment(props) {
         <div style={{ display: "inline-flex", flexWrap: "wrap", alignItems: "flex-end" }}>
           {attachmentResponseDto.map((attachment, index) => (
             <div key={attachment.id} className="attachment">
-              <a href={"download-file/" + attachment.name} onClick={() => downloadFile(attachment.url)} style={{ margin: "12px 36px 15px 0px" }}>
+              <a target="_blank" href={"download-file/" + attachment.name} onClick={() => downloadFile(attachment.url)} style={{ margin: "12px 36px 15px 0px" }}>
                 <div style={{ width: "50px" }} >
                   <FileIcon extension={regexForFileExtension.exec(attachment.name)[1]} {...defaultStyles.docx} />
                 </div>

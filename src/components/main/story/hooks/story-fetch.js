@@ -1,26 +1,27 @@
 import { useEffect, useRef, useReducer } from 'react';
 
-import StoryTaskService from "../../../../services/story-task.service";
+import StoryService from "../../../../services/story.service";
 
-export const UpdateStoryTaskGeneralInfo = (storyTaskId, storyPoints, assignedToUsername, status, finishedAt) => {
+export const FetchStoryData = (storyId) => {
 
     const initialState = {
-        requestStatus: 'idle',
+        status: 'idle',
         error: null,
         data: [],
     };
 
     useEffect(() => {
         let cancelRequest = false;
-        if (isNaN(storyTaskId)) {
+        if (isNaN(storyId)) {
             return;
         }
 
-        const updateStoryTaskGeneralInfo = async () => {
+        const getStoryData = async () => {
             dispatch({ type: 'FETCHING' });
-            StoryTaskService.updateStoryTaskGeneralInfo(storyTaskId, storyPoints, assignedToUsername, status, finishedAt).then(
+            StoryService.getStory(storyId).then(
                 response => {
-                    if (cancelRequest) {
+                    if(cancelRequest) 
+                    {
                         return;
                     }
                     if (response != null) {
@@ -29,7 +30,8 @@ export const UpdateStoryTaskGeneralInfo = (storyTaskId, storyPoints, assignedToU
                     }
                 },
                 error => {
-                    if (cancelRequest) {
+                    if(cancelRequest) 
+                    {
                         return;
                     }
                     console.log(error);
@@ -38,7 +40,7 @@ export const UpdateStoryTaskGeneralInfo = (storyTaskId, storyPoints, assignedToU
             )
         };
 
-        updateStoryTaskGeneralInfo();
+        getStoryData();
 
         return function cleanup() {
             cancelRequest = true;
@@ -48,11 +50,11 @@ export const UpdateStoryTaskGeneralInfo = (storyTaskId, storyPoints, assignedToU
     const [state, dispatch] = useReducer((state, action) => {
         switch (action.type) {
             case 'FETCHING':
-                return { ...initialState, requestStatus: 'fetching' };
+                return { ...initialState, status: 'fetching' };
             case 'FETCHED':
-                return { ...initialState, requestStatus: 'fetched', data: action.payload };
+                return { ...initialState, status: 'fetched', data: action.payload };
             case 'FETCH_ERROR':
-                return { ...initialState, requestStatus: 'error', error: action.payload };
+                return { ...initialState, status: 'error', error: action.payload };
             default:
                 return state;
         }

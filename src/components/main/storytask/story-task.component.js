@@ -46,6 +46,10 @@ function App() {
         }
     }, [data])
 
+    function updateData(updatedData) {
+        setCurrentData(updatedData);
+    }
+
     function changeDetails() {
         setCurrentError();
         StoryTaskService.updateStoryTaskTitleAndDescription(storyTaskId, title, description).then(
@@ -68,10 +72,6 @@ function App() {
     function toggleEditMode() {
         setIsEditActive(!isEditActive);
         setDeleteActive(!isDeleteActive);
-    }
-
-    function updateData(updatedData) {
-        setCurrentData(updatedData);
     }
 
     return (

@@ -14,30 +14,41 @@ import { FileIcon, defaultStyles } from 'react-file-icon';
 import downloadFile from '../../../helpers/downloadFile'
 
 import StoryTaskService from "../../../services/story-task.service";
+import Priority from './priority.component';
 
-import "./story-task-general-info.css"
+import "./story-general-info.css"
 
 
 export default function StoryGeneralInfo(props) {
-    const { storyTaskId, createdByUsername, assignedToUsername, finishedAt, status, storyPoints } = props.storyGeneralInfo;
+    const { storyId, createdBy, priority, softwareApplication, isFinished, totalStoryPoints } = props.storyGeneralInfo;
     const [isEditActive, setIsEditActive] = useState(false);
 
     const [data, setData] = useState([]);
     const [error, setError] = useState();
 
-    const [currentAssignedToUsername, setCurrentAssignedToUsername] = useState(assignedToUsername);
-    const [currentFinishedAt, setCurrentFinishedAt] = useState(finishedAt);
-    const [currentStatus, setCurrentStatus] = useState(status);
-    const [currentStoryPoints, setCurrentStoryPoints] = useState(storyPoints);
+    const [currentPriority, setPriority] = useState(priority);
+    const [currentSoftwareApplication, setSoftwareApplication] = useState(softwareApplication);
+
 
 
     function toggleEditMode() {
         setIsEditActive(!isEditActive);
     }
 
+    function totalStoryPointsText() {
+        if (totalStoryPoints == null) {
+            return "There are no story subtasks";
+        }
+        if (totalStoryPoints) {
+            return totalStoryPoints;
+
+        }
+    }
+
     function changeDetails() {
+        /*
         setError();
-        StoryTaskService.updateStoryTaskGeneralInfo(storyTaskId, currentStoryPoints, currentAssignedToUsername, currentStatus, currentFinishedAt).then(
+        StoryTaskService.updateStoryTaskGeneralInfo(storyId, currentStoryPoints, currentAssignedToUsername, currentStatus, currentFinishedAt).then(
             response => {
                 if (response != null) {
                     setData(response.data);
@@ -50,6 +61,7 @@ export default function StoryGeneralInfo(props) {
                 console.log(error);
             }
         )
+        */
     }
 
 
@@ -65,20 +77,15 @@ export default function StoryGeneralInfo(props) {
             </div>
             <div className="card-block px-2">
                 <h4 className="card-title">Story task general information:</h4>
-                <p className="card-text">Created by username: {createdByUsername}</p>
-                <label>Assigned to username:</label>
-                <input className="input-general" onChange={e => setCurrentAssignedToUsername(e.target.value)} value={currentAssignedToUsername} disabled={!isEditActive} />
-                <br></br>
-                <label>Story points </label>
-                <input className="input-general" onChange={e => setCurrentStoryPoints(e.target.value)} value={currentStoryPoints} disabled={!isEditActive} />
-                <br></br>
-                <label>Status </label>
-                <input className="input-general" onChange={e => setCurrentStatus(e.target.value)} value={currentStatus} disabled={!isEditActive} />
-                <br></br>
-                <label>Finished </label>
-                <input className="input-general" onChange={e => setCurrentFinishedAt(e.target.value)} value={currentFinishedAt ? "Finished" : "Not finished"} disabled={!isEditActive} />
+                <p className="card-text">Created by username: {createdBy.username}</p>
+                <p className="card-text">Finished: {isFinished ? "Yes" : "No"}</p>
+                <p className="card-text">Total story points: {totalStoryPointsText()}</p>
+
+                <Priority isEditActive={isEditActive} priority={priority}></Priority>
+
                 {error && <div style={{ color: "red" }}>Could not update details, check console for more info</div>}
             </div>
+
         </div>
 
     );
