@@ -17,11 +17,13 @@ import {
     MenuItem,
 } from 'react-bootstrap-typeahead';
 
+const SEARCH_VALUE = "searchValue";
+
 
 const filterComponents = {
     choice: ({ filter, onChange, onChangeFilterForTextSearch, onButtonClick, value }) => (
         <div>
-            <input type="text" onInput={(e) => onChangeFilterForTextSearch("searchValue", e.target.value)} />
+            <input type="text" onInput={(e) => onChangeFilterForTextSearch(`searchValue`, e.target.value)} />
             <select id={filter.id} value={value || ''} onInput={(e) => onChange(filter.id, e.target.value)} size={1 + filter.choices.length}>
                 <option value="">(none)</option>
                 {filter.choices.map((c) => <option value={c} key={c}>{c}</option>)}
@@ -59,30 +61,43 @@ export default class SearchResult extends Component {
         console.log(this.state.filters);
 
         for (let [key, value] of Object.entries(this.state.filters)) {
-            if (!this.state.allFiltersApplied[key]) {
-                this.state.allFiltersApplied[key] = [this.state.filters[key]];
-            } else if (this.state.allFiltersApplied[key]) {
-                for (var filterKey in this.state.allFiltersApplied[key]) {
-                    if (this.state.allFiltersApplied[key][filterKey] !== value && this.state.allFiltersApplied[key].indexOf(this.state.filters[key]) === -1) {
-                        this.state.allFiltersApplied[key].push({
-                            "property": this.state.filters[key],
-                            "searchValue": this.state.filters["searchValue"]
-                        });
+            if (key !== SEARCH_VALUE) {
+                if (this.state.allFiltersApplied[key]) {
+                    for (var filterKey in this.state.allFiltersApplied[key]) {
+                        let indexOf = this.state.allFiltersApplied[key].map(e => e[key]).indexOf(this.state.filters[key]);
+                        if ((this.state.filters[key] != this.state.allFiltersApplied[key][filterKey][key]) && indexOf === -1) {
+                            this.state.allFiltersApplied[key].push(this.state.filters);
+                        } else {
+                            this.state.allFiltersApplied[key][indexOf][SEARCH_VALUE] = this.state.filters[SEARCH_VALUE];
+                        }
                     }
+                } else if (!this.state.allFiltersApplied[key]) {
+                    this.state.allFiltersApplied[key] = [];
+                    this.state.allFiltersApplied[key].push(this.state.filters);
                 }
-            } else if (!this.state.allFiltersApplied[key]) {
-                this.state.allFiltersApplied.push(this.state.filters);
             }
         }
     }
 
     onChangeFilter(filterId, value) {
-        const newFilterState = Object.assign({}, this.state.filters, { [filterId]: value || undefined });
+        let searchArray;
+        if (this.state.filters[SEARCH_VALUE] && Object.keys(this.state.filters).length < 2) {
+            searchArray = this.state.filters
+        } else if (this.state.filters[SEARCH_VALUE]) {
+            searchArray = { "searchValue": this.state.filters[SEARCH_VALUE] }
+        }
+        const newFilterState = Object.assign({}, searchArray, { [filterId]: value || undefined });
         this.setState({ filters: newFilterState });
     }
 
     onChangeFilterForTextSearch(searchValue, value) {
-        const newFilterState = Object.assign({}, this.state.filters, { [searchValue]: value || undefined });
+        let searchArray;
+        if (this.state.filters[SEARCH_VALUE] && Object.keys(this.state.filters).length < 2) {
+            searchArray = this.state.filters
+        } else if (this.state.filters[SEARCH_VALUE]) {
+            searchArray = { "searchValue": this.state.filters[SEARCH_VALUE] }
+        }
+        const newFilterState = Object.assign({}, searchArray, { [searchValue]: value || undefined });
         this.setState({ filters: newFilterState });
         this.state.searchValues = this.state.searchValues.filter((item) => {
             if (Object.keys(this.state.filters).length > 0) {
