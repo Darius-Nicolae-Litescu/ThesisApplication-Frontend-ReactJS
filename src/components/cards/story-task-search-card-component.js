@@ -8,9 +8,10 @@ import {
 import ReactDOM from 'react-dom';
 import '../search/live-search-bar.css';
 import { Card } from 'react-bootstrap'
-import "./story-search-card.css"
+import Moment from 'react-moment';
+import "./story-task-search-card.css"
 
-export default class StorySearchCard extends Component {
+export default class StoryTaskSearchCard extends Component {
 
     constructor(props) {
         super(props);
@@ -18,7 +19,7 @@ export default class StorySearchCard extends Component {
 
     render() {
         return (
-            <a href={`/story/${this.props.story.id}`} style={{ textDecoration: "none" }}>
+            <a href={`/story-task/${this.props.storytask.id}`} style={{ textDecoration: "none" }}>
                 <Card
                     bg="light"
                     text="dark"
@@ -27,21 +28,22 @@ export default class StorySearchCard extends Component {
                 >
                     <Card.Body>
                         <div className="card-block px-2">
-                            <Card.Title>{this.props.story.title}
-                                <h3 class="subtitle">{this.props.story.softwareApplicationName}</h3>
+                            <Card.Title>{this.props.storytask.title}
+                                <h3 class="subtitle">Created by: {this.props.storytask.createdByUsername}</h3>
+                                <h3 class="subtitle">Assigned to: {this.props.storytask.assignedToUsername}</h3>
                             </Card.Title>
 
                             <Card.Text>
-                                {this.props.story.description}
+                                {this.props.storytask.description}
                             </Card.Text>
                             <Card.Footer>
                                 <div class="level center">
-                                    {this.props.story.priorityTitle}
+                                    Status: {this.props.storytask.status}
                                 </div>
                                 <div class="points center">
-                                    {this.props.story.priorityLevel}
-
+                                    Task points: {this.props.storytask.storyPoints}
                                 </div>
+                                <Moment className="createdDate" format="YYYY-MM-DD HH:mm">{this.props.storytask.createdAt}</Moment>
                             </Card.Footer>
                         </div>
                     </Card.Body>

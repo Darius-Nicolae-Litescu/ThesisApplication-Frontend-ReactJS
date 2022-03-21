@@ -4,9 +4,15 @@ import EventBus from "../../common/EventBus";
 import SearchAutocomplete from "./search-autocomplete.component";
 import PaginationCard from "./pagination-cards-search.component"
 import SearchService from '../../services/search.service'
+import StoryFilterService from '../../services/search-filter.service'
+
 import { Button, Card, Container, Spinner, Table } from 'react-bootstrap'
 import StorySearchCard from '../cards/story-search-card-component'
-import StoryTaskSearchCard from '../cards/storytask-search-card-component'
+import StoryTaskSearchCard from '../cards/story-task-search-card-component'
+import SoftwareApplicationCard from "../cards/software-application-card.component"
+import UserCard from "../cards/user-card.component"
+import CommentCard from "../cards/comment-card.component"
+
 import applyRules from 'react-jsonschema-form-conditionals';
 import Engine from 'json-rules-engine-simplified';
 import { FilterWrapper } from "./filters/filter-wrapper.component"
@@ -32,7 +38,7 @@ export default class SearchResult extends Component {
             filterData: {},
             searchValues: {},
             selected: "",
-            allFiltersApplied: [],
+            finalFilter: {},
             collections: [],
             hitsCount: null,
             isLoading: false,
@@ -41,7 +47,11 @@ export default class SearchResult extends Component {
             finishedMappingObjects: false
         };
         this.loadFilterData = this.loadFilterData.bind(this);
+        this.setFinalFilter = this.setFinalFilter.bind(this);
+
         this.searchValues = this.searchValues.bind(this);
+        this.searchFilterResults = this.searchFilterResults.bind(this);
+
         this.addUniqueCollectionNameForFilters = this.addUniqueCollectionNameForFilters.bind(this);
         this.typingTimeout = null;
         this.onFieldChange = this.onFieldChange.bind(this);
@@ -53,7 +63,7 @@ export default class SearchResult extends Component {
 
         if (currentSelectedValue && currentSelectedValue.length > 3) {
             clearTimeout(this.typingTimeout);
-            this.typingTimeout = setTimeout(this.searchValues(currentSelectedValue), 475);
+            this.typingTimeout = setTimeout(this.searchValues(currentSelectedValue), 1000);
         } else {
             clearTimeout(this.typingTimeout);
         }
@@ -119,8 +129,17 @@ export default class SearchResult extends Component {
             response => {
                 if (response != null && response.data.success != null) {
                     response = response.data.success;
-                    let results = response.hits.hits;
-                    let hits = response.hits.total.value;
+                    if (response == null || response.elements == null) {
+                        this.setState({
+                            searchValues: [],
+                            hitsCount: 0,
+                            isLoading: false,
+                            isLoadingDataFinished: true
+                        })
+                        return;
+                    }
+                    let results = response.elements.hits.hits;
+                    let hits = response.numberOfResults;
                     console.log(results);
                     this.setState({
                         searchValues: results,
@@ -153,6 +172,50 @@ export default class SearchResult extends Component {
     }
 
 
+    searchFilterResults(value) {
+        this.setState({ collections: [] })
+        this.setState({ isLoading: true })
+        this.setState({ isLoadingDataFinished: false })
+        StoryFilterService.filterSearchResults(value).then(
+            response => {
+                if (response != null && response.data.success != null) {
+                    response = response.data.success;
+                    let results = response.elements;
+                    let hits = response.numberOfResults;
+                    console.log(results);
+                    this.setState({
+                        searchValues: results,
+                        hitsCount: hits,
+                    })
+                    results.map((option, index, { length }) => {
+                        this.addUniqueCollectionNameForFilters(option._index);
+                    });
+                } else if (response != null && response.data.success == null) {
+                    this.setState({
+                        searchValues: [],
+                        hitsCount: 0,
+                    });
+                }
+                this.setState({ isLoading: false });
+                this.setState({ isLoadingDataFinished: true });
+            },
+            error => {
+                console.log(error);
+                this.setState({
+                    content:
+                        (error.response && error.response.data) ||
+                        error.message ||
+                        error.toString()
+                });
+            }
+        );
+    }
+
+    setFinalFilter(value) {
+        this.setState({ finalFilter: value });
+        this.searchFilterResults(value);
+    }
+
     render() {
         let { isLoadingDataFinished, isLoading, searchValues, finishedMappingObjects, filterData, collections, hitsCount } = this.state;
 
@@ -168,7 +231,7 @@ export default class SearchResult extends Component {
 
                 <div className="searchMainContainer">
                     {finishedMappingObjects &&
-                        <FilterWrapper searchResultTypes={collections}></FilterWrapper>
+                        <FilterWrapper searchResultTypes={collections} setFinalFilter={this.setFinalFilter}></FilterWrapper>
                     }
                     <div className="cardsList">
                         {hitsCount != null && <h2 className="searchFont">Search results count: {hitsCount}</h2>}
@@ -183,7 +246,13 @@ export default class SearchResult extends Component {
                                         console.log(option._source)
                                         return (<StorySearchCard key={index} story={option._source}></StorySearchCard>);
                                     } else if (option._index == "storytask") {
-                                        return (<StoryTaskSearchCard key={index} story={option._source}></StoryTaskSearchCard>);
+                                        return (<StoryTaskSearchCard key={index} storytask={option._source}></StoryTaskSearchCard>);
+                                    } else if (option._index == "softwareapplication") {
+                                        return (<SoftwareApplicationCard key={index} softwareapplication={option._source}></SoftwareApplicationCard>)
+                                    } else if (option._index == "comment") {
+                                        return (<CommentCard key={index} comment={option._source}></CommentCard>)
+                                    } else if (option._index == "user") {
+                                        return (<UserCard key={index} user={option._source}></UserCard>)
                                     }
                                 })
                             }

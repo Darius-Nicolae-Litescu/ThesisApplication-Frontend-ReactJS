@@ -1,5 +1,5 @@
 import axios from "../axios";
-import * as Constants from './searchConstants';
+import * as Constants from './utils/searchConstants';
 
 class SearchService {
     searchByKeyword(term = Constants.DEFAULT_SEARCH_TERM,

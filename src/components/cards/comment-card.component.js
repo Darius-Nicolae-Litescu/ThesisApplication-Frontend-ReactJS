@@ -8,8 +8,11 @@ import {
 import ReactDOM from 'react-dom';
 import '../search/live-search-bar.css';
 import { Card } from 'react-bootstrap'
+import Moment from 'react-moment';
 
-export default class StoryTaskSearchCard extends Component {
+import "./comment-card.css"
+
+export default class CommentCard extends Component {
 
     constructor(props) {
         super(props);
@@ -23,17 +26,17 @@ export default class StoryTaskSearchCard extends Component {
                 className="mb-2"
                 style={{ width: '100%' }}
             >
-                <div className="card-header border-0">
-                    <h2>StoryTask</h2>
-                    <img src="//placehold.it/100" alt="" />
-                </div>
                 <Card.Body>
                     <div className="card-block px-2">
-                        <Card.Title>{this.props.story.title}</Card.Title>
+                        <Card.Title>
+                            Comment
+                        </Card.Title>
                         <Card.Text>
-                            {this.props.story.description}
+                        "{this.props.comment.content}"
+                            <h3 class="subtitle">Posted by username: {this.props.comment.postedByUsername}</h3>
+                            <h3 class="subtitle">Posted by email: {this.props.comment.postedByEmail}</h3>
+                            <Moment className="createdDate" format="YYYY-MM-DD HH:mm">{this.props.comment.postedAt}</Moment>
                         </Card.Text>
-                        <Card.Footer>{this.props.story.description}</Card.Footer>
                     </div>
                 </Card.Body>
             </Card>

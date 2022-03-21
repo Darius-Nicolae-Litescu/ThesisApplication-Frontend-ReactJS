@@ -1,10 +1,12 @@
- import React from "react";
+import React from "react";
 import { useState, useEffect } from 'react';
 import { withTheme } from '@rjsf/core';
 import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
+import FilterStoryDto from '../../../services/filterDtos/filterStoryDto'
+
 const Form = withTheme(Bootstrap4Theme);
 
- const storySchema = {
+const storySchema = {
   title: "Story filter",
   description: "Filter possible Story details",
   type: "object",
@@ -45,19 +47,33 @@ const Form = withTheme(Bootstrap4Theme);
 };
 
 export const StoryFilter = (props) => {
-  const { addUniqueFilterElseReplace } = props.addUniqueFilterElseReplace;
+  const { setStoryFilter, keepFormData, setKeepFormData } = props;
 
-  const [filterValue, setFilterValue] = useState();
+  const [formData, setFormData] = useState();
 
-  const getFilterValues = ({formData}) => {
-    console.log(formData);
-}
+  const getFilterValues = ({ formData }) => {
+    let filterStoryDto = new FilterStoryDto(formData.title, formData.description, formData.category, formData.priorityId,
+      formData.priorityTitle, formData.priorityDescription, formData.priorityLevel,
+      formData.softwareApplicationName, formData.softwareApplicationDescription);
+
+    setKeepFormData({ ...keepFormData, storyFilterFormData: formData });
+    setStoryFilter(filterStoryDto);
+  }
+
+  const keepFormDataLogic = () => {
+    if (keepFormData) {
+      if (keepFormData.storyFilterFormData) {
+        return keepFormData.storyFilterFormData;
+      }
+    }
+    return {};
+  }
 
   return (
     <div className="StoryFilter">
-    <Form schema={storySchema} onSubmit={getFilterValues}>
-    <button className="FilterButton" type="submit">Filter</button>
-    </Form>
-  </div>
+      <Form schema={storySchema} formData={keepFormDataLogic()} onSubmit={getFilterValues} >
+        <button className="FilterButton" type="submit">Filter</button>
+      </Form>
+    </div>
   );
 }
