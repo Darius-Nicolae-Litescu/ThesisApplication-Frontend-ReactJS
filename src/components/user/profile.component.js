@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Card, Container, ListGroup, Spinner } from 'react-bootstrap'
 import UserService from "../../services/user.service";
 import "./center-spinner.css"
+
 class Profile extends Component {
   constructor(props) {
     super(props);

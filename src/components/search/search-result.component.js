@@ -1,8 +1,13 @@
-import React, { Component } from "react";
-import UserService from "../../services/user.service";
-import EventBus from "../../common/EventBus";
-import SearchAutocomplete from "./search-autocomplete.component";
-import PaginationCard from "./pagination-cards-search.component"
+import React, { useEffect, useState, useReducer, Fragment } from 'react';
+
+import {
+    BrowserRouter as Router,
+    Link,
+    Route,
+    Routes,
+    useParams,
+} from "react-router-dom";
+
 import SearchService from '../../services/search.service'
 import StoryFilterService from '../../services/search-filter.service'
 
@@ -16,7 +21,6 @@ import CommentCard from "../cards/comment-card.component"
 import applyRules from 'react-jsonschema-form-conditionals';
 import Engine from 'json-rules-engine-simplified';
 import { FilterWrapper } from "./filters/filter-wrapper.component"
-
 import {
     AsyncTypeahead,
     Highlighter,
@@ -29,57 +33,41 @@ import "./search-result.css"
 const SEARCH_VALUE = "searchValue";
 
 
-export default class SearchResult extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            selected: "",
-            filters: {},
-            filterData: {},
-            searchValues: {},
-            selected: "",
-            finalFilter: {},
-            collections: [],
-            hitsCount: null,
-            isLoading: false,
-            isLoadingDataFinished: false,
-            isLoadingFiltersFinished: false,
-            finishedMappingObjects: false
-        };
-        this.loadFilterData = this.loadFilterData.bind(this);
-        this.setFinalFilter = this.setFinalFilter.bind(this);
+export const SearchResult = (props) => {
 
-        this.searchValues = this.searchValues.bind(this);
-        this.searchFilterResults = this.searchFilterResults.bind(this);
+    const { searchTerm } = useParams();
 
-        this.addUniqueCollectionNameForFilters = this.addUniqueCollectionNameForFilters.bind(this);
-        this.typingTimeout = null;
-        this.onFieldChange = this.onFieldChange.bind(this);
-    }
+    const [searchingTerm, setSearchingTerm] = useState(searchTerm);
 
-    onFieldChange(event) {
+    const [selected, setSelected] = useState(searchTerm);
+    const [filters, setFilters] = useState({});
+    const [filterData, setFilterData] = useState({});
+    const [searchValues, setSearchValues] = useState({});
+    const [finalFilter, setFinalFilter] = useState({});
+    const [collections, setCollections] = useState([]);
+    const [hitsCount, setHitsCount] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingDataFinished, setIsLoadingDataFinished] = useState(false);
+    const [finishedMappingObjects, setFinishedMappingObjects] = useState(false);
+    const [typingTimeout, setTypingTimeout] = useState(null);
+    const [error, setError] = useState(null);
+
+
+    function onFieldChange(event) {
         let currentSelectedValue = event.target.value;
-        this.setState({ selected: currentSelectedValue });
-
+        setSearchingTerm(currentSelectedValue);
         if (currentSelectedValue && currentSelectedValue.length > 3) {
-            clearTimeout(this.typingTimeout);
-            this.typingTimeout = setTimeout(this.searchValues(currentSelectedValue), 1000);
+            clearTimeout(typingTimeout);
+            setTypingTimeout(setTimeout(searchForValues(currentSelectedValue), 1000));
         } else {
-            clearTimeout(this.typingTimeout);
+            clearTimeout(typingTimeout);
         }
     }
 
+    function loadFilterData(collections) {
+        setIsLoading(true);
+        setFinishedMappingObjects(false);
 
-    addUniqueCollectionNameForFilters(collectionName) {
-        if (this.state.collections.indexOf(collectionName) === -1) {
-            console.log(collectionName)
-            this.state.collections.push(collectionName);
-        }
-    }
-
-    loadFilterData(collections) {
-        this.setState({ isLoading: true })
-        this.setState({ finishedMappingObjects: false })
         SearchService.getFieldsPropertyNamesForCollections(collections).then(
             response => {
                 if (response != null) {
@@ -97,85 +85,73 @@ export default class SearchResult extends Component {
                         filtersLoaded.push(filter);
                     }
 
-                    this.setState({
-                        filterData: filtersLoaded
-                    });
+                    setFilterData(filtersLoaded);
+
                     console.log(filtersLoaded);
-                    this.setState({ isLoading: false })
-                    this.setState({ finishedMappingObjects: true })
+
+                    setIsLoading(false);
+                    setFinishedMappingObjects(true);
 
                 }
             },
             error => {
                 console.log(error);
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                });
+                setError(error);
             }
         );
     }
 
-    searchValues(value) {
+    function searchForValues(value) {
         if (value === "") {
             return;
         }
-        this.setState({ collections: [] })
-        this.setState({ isLoading: true })
-        this.setState({ isLoadingDataFinished: false })
+        setCollections([]);
+        setIsLoading(true);
+        setIsLoadingDataFinished(false);
+
         SearchService.searchByKeyword(value, [], [], []).then(
             response => {
                 if (response != null && response.data.success != null) {
                     response = response.data.success;
                     if (response == null || response.elements == null) {
-                        this.setState({
-                            searchValues: [],
-                            hitsCount: 0,
-                            isLoading: false,
-                            isLoadingDataFinished: true
-                        })
+                        setSearchValues([]);
+                        setHitsCount(0);
+                        setIsLoading(false);
+                        setIsLoadingDataFinished(true);
                         return;
                     }
                     let results = response.elements.hits.hits;
                     let hits = response.numberOfResults;
                     console.log(results);
-                    this.setState({
-                        searchValues: results,
-                        hitsCount: hits,
-                    })
-                    results.map((option, index, { length }) => {
-                        this.addUniqueCollectionNameForFilters(option._index);
-                    });
-                    this.loadFilterData(this.state.collections);
+
+                    setSearchValues(results);
+                    setHitsCount(hits);
+
+                    const uniqueCollectionNames = [...new Set(results.map(option => option._index))];
+                    setCollections(uniqueCollectionNames);
+
+                    loadFilterData(collections);
                     console.log("Filter data loaded")
+
                 } else if (response != null && response.data.success == null) {
-                    this.setState({
-                        searchValues: [],
-                        hitsCount: 0,
-                    });
+                    setSearchValues([]);
+                    setHitsCount(0);
                 }
-                this.setState({ isLoading: false });
-                this.setState({ isLoadingDataFinished: true });
+                setIsLoading(false);
+                setIsLoadingDataFinished(true);
             },
             error => {
                 console.log(error);
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                });
+                setError(error);
             }
         );
     }
 
 
-    searchFilterResults(value) {
-        this.setState({ collections: [] })
-        this.setState({ isLoading: true })
-        this.setState({ isLoadingDataFinished: false })
+    function searchFilterResults(value) {
+        setCollections([]);
+        setIsLoading(true);
+        setIsLoadingDataFinished(false);
         StoryFilterService.filterSearchResults(value).then(
             response => {
                 if (response != null && response.data.success != null) {
@@ -183,86 +159,85 @@ export default class SearchResult extends Component {
                     let results = response.elements;
                     let hits = response.numberOfResults;
                     console.log(results);
-                    this.setState({
-                        searchValues: results,
-                        hitsCount: hits,
-                    })
-                    results.map((option, index, { length }) => {
-                        this.addUniqueCollectionNameForFilters(option._index);
-                    });
+
+                    setSearchValues(results);
+                    setHitsCount(hits);
+
+                    const uniqueCollectionNames = [...new Set(results.map(option => option._index))];
+                    setCollections(uniqueCollectionNames);
+                    loadFilterData(collections);
+
                 } else if (response != null && response.data.success == null) {
-                    this.setState({
-                        searchValues: [],
-                        hitsCount: 0,
-                    });
+                    setSearchValues([]);
+                    setHitsCount(0);
                 }
-                this.setState({ isLoading: false });
-                this.setState({ isLoadingDataFinished: true });
+                setIsLoading(false);
+                setIsLoadingDataFinished(true);
             },
             error => {
                 console.log(error);
-                this.setState({
-                    content:
-                        (error.response && error.response.data) ||
-                        error.message ||
-                        error.toString()
-                });
+                setError(error);
             }
         );
     }
 
-    setFinalFilter(value) {
-        this.setState({ finalFilter: value });
-        this.searchFilterResults(value);
+    function changeFinalFilter(value) {
+        setFinalFilter(value);
+        searchFilterResults(value);
     }
 
-    render() {
-        let { isLoadingDataFinished, isLoading, searchValues, finishedMappingObjects, filterData, collections, hitsCount } = this.state;
+    useEffect(() => {
+        searchForValues(searchTerm)
+    },
+        []
+    )
 
-        return (
-            <Container>
-                <input style={{ width: "100%", height: "40%" }}
-                    type="text"
-                    name="searchValue"
-                    value={this.state.searchValue}
-                    placeholder="Search ..."
-                    onChange={this.onFieldChange}
-                />
 
-                <div className="searchMainContainer">
-                    {finishedMappingObjects &&
-                        <FilterWrapper searchResultTypes={collections} setFinalFilter={this.setFinalFilter}></FilterWrapper>
-                    }
-                    <div className="cardsList">
-                        {hitsCount != null && <h2 className="searchFont">Search results count: {hitsCount}</h2>}
-                        {(function () {
-                            if (!isLoadingDataFinished) {
-                                if (isLoading) {
-                                    return <Spinner animation="grow" variant="primary" size="lg" className="center-spinner" />;
-                                }
-                            } else {
-                                return searchValues.map((option, index, { length }) => {
-                                    if (option._index === "story") {
-                                        console.log(option._source)
-                                        return (<StorySearchCard key={index} story={option._source}></StorySearchCard>);
-                                    } else if (option._index == "storytask") {
-                                        return (<StoryTaskSearchCard key={index} storytask={option._source}></StoryTaskSearchCard>);
-                                    } else if (option._index == "softwareapplication") {
-                                        return (<SoftwareApplicationCard key={index} softwareapplication={option._source}></SoftwareApplicationCard>)
-                                    } else if (option._index == "comment") {
-                                        return (<CommentCard key={index} comment={option._source}></CommentCard>)
-                                    } else if (option._index == "user") {
-                                        return (<UserCard key={index} user={option._source}></UserCard>)
-                                    }
-                                })
+    return (
+
+        <Container>
+            <input style={{ width: "100%", height: "40%" }}
+                type="text"
+                name="searchValue"
+                value={searchingTerm}
+                placeholder="Search ..."
+                onChange={onFieldChange}
+            />
+
+            <div className="searchMainContainer">
+                {finishedMappingObjects &&
+                    <FilterWrapper searchResultTypes={collections} setFinalFilter={changeFinalFilter} isLoading = {isLoading} isLoadingDataFinished = {isLoadingDataFinished} ></FilterWrapper>
+                }
+                <div className="cardsList">
+                    {hitsCount != null && <h2 className="searchFont">Search results count: {hitsCount}</h2>}
+                    {(function () {
+                        if (!isLoadingDataFinished) {
+                            if (isLoading) {
+                                return <Spinner animation="grow" variant="primary" size="lg" className="center-spinner" />;
                             }
-
-                        })()}
-                    </div>
+                        } else {
+                            return searchValues.map((option, index, { length }) => {
+                                if (option._index === "story") {
+                                    console.log(option._source)
+                                    return (<StorySearchCard key={index} story={option._source}></StorySearchCard>);
+                                } else if (option._index == "storytask") {
+                                    return (<StoryTaskSearchCard key={index} storytask={option._source}></StoryTaskSearchCard>);
+                                } else if (option._index == "softwareapplication") {
+                                    return (<SoftwareApplicationCard key={index} softwareapplication={option._source}></SoftwareApplicationCard>)
+                                } else if (option._index == "comment") {
+                                    return (<CommentCard key={index} comment={option._source}></CommentCard>)
+                                } else if (option._index == "user") {
+                                    return (<UserCard key={index} user={option._source}></UserCard>)
+                                }
+                            })
+                        }
+                    })()}
                 </div>
+            </div>
 
-            </Container>
+        </Container>
 
-        );
-    }
+    );
+
 }
+

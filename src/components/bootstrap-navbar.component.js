@@ -7,7 +7,7 @@ import Home from "./home.component";
 import BoardUser from "./board-user.component";
 import BoardModerator from "./board-moderator.component";
 import SearchAutocomplete from "./search/search-autocomplete.component";
-import SearchResult from "./search/search-result.component"
+import { SearchResult } from "./search/search-result.component"
 import BoardAdmin from "./board-admin.component";
 import EditProfile from "./user/edit-user-details.component"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap'
@@ -17,6 +17,9 @@ import { clearMessage } from "../actions/message";
 import { connect } from "react-redux";
 import Story from "./main/story/story.component";
 import StoryTask from "./main/storytask/story-task.component";
+import {BoardSelection} from "./kanban/board-selection.component"
+import {Board} from "./kanban/board.component"
+
 
 import { history } from '../helpers/history';
 
@@ -89,12 +92,11 @@ class BootstrapNavbar extends React.Component {
                         <Navbar.Collapse  id="responsive-navbar-nav">
                             <Nav className="container-fluid" >
                                 <Nav.Link href="/ticket">Ticket list</Nav.Link>
-                                <Nav.Link href="/kanban">Kanban board</Nav.Link>
+                                <Nav.Link href="/kanban-board">Boards</Nav.Link>
                                 {showAdminBoard && <Nav.Link href="/admin">Admin board</Nav.Link>}
                                 <Form style={{width:"70%"}}>
                                     <div className="search-bar-form">
                                     <SearchAutocomplete > </SearchAutocomplete>
-                                    <Button variant="outline-success">Search</Button>
                                     </div>
                                 </Form>
                             </Nav>
@@ -121,12 +123,15 @@ class BootstrapNavbar extends React.Component {
                             <Route exact path="/register" element={<Register />} />
                             <Route exact path="/profile" element={<Profile />} />
                             <Route exact path="/profile/edit" element={<EditProfile />} />
-                            <Route exact path="/search-result" element={<SearchResult />} />
+                            <Route exact path="/search-result/:searchTerm" element={<SearchResult />} />
                             <Route path="/user" element={<BoardUser />} />
                             <Route path="/mod" element={<BoardModerator />} />
                             <Route path="/admin" element={<BoardAdmin />} />
                             <Route path="story/:storyId" element={<Story />} />
                             <Route path="story-task/:storyTaskId" element={<StoryTask />} />
+                            <Route path="kanban-board" element={<BoardSelection />} />
+                            <Route path="kanban-board/:boardId" element={<Board />} />
+
                         </Routes>
                     </div>
                     <AuthVerify logOut={this.logOut} />

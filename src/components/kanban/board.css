@@ -1,0 +1,36 @@
+.board-content{
+    display: flex;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    height: 100%;
+
+}
+
+.board-content> div{
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    margin-right: 10px;
+
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+}
+
+.board-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10%;
+    width: 100%;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    margin-bottom: 10px;
+
+}
+
+.submit-changes-button{
+    margin: 10px 10px 10px 10px;
+}
