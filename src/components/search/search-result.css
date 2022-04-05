@@ -4,8 +4,9 @@
       position: unset;
     }
   .cardsList{ 
+    width: 70%;
+    padding-right: 5%;
          right: 0;
-    width: 80%;
     position: absolute;
 }
 .searchFont{

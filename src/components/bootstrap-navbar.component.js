@@ -9,16 +9,16 @@ import BoardModerator from "./board-moderator.component";
 import SearchAutocomplete from "./search/search-autocomplete.component";
 import { SearchResult } from "./search/search-result.component"
 import BoardAdmin from "./board-admin.component";
-import EditProfile from "./user/edit-user-details.component"
+import {EditProfile} from "./user/edit-user-details.component"
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Container } from 'react-bootstrap'
-import Profile from './user/profile.component';
+import {Profile} from './user/profile.component';
 import { logout } from "../actions/auth";
 import { clearMessage } from "../actions/message";
 import { connect } from "react-redux";
 import Story from "./main/story/story.component";
 import StoryTask from "./main/storytask/story-task.component";
-import {BoardSelection} from "./kanban/board-selection.component"
-import {Board} from "./kanban/board.component"
+import { BoardSelection } from "./kanban/board-selection.component"
+import { Board } from "./kanban/board.component"
 
 
 import { history } from '../helpers/history';
@@ -64,8 +64,7 @@ class BootstrapNavbar extends React.Component {
     }
 
     componentWillUnmount() {
-        if(this.state.isMounted == true)
-        {
+        if (this.state.isMounted == true) {
             this.state.isMounted = false;
             EventBus.remove("logout");
         }
@@ -89,20 +88,20 @@ class BootstrapNavbar extends React.Component {
                     <Navbar bg="light" expand="lg" sticky="top" >
                         <Navbar.Brand href="/">Home</Navbar.Brand>
                         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                        <Navbar.Collapse  id="responsive-navbar-nav">
+                        <Navbar.Collapse id="responsive-navbar-nav">
                             <Nav className="container-fluid" >
                                 <Nav.Link href="/ticket">Ticket list</Nav.Link>
                                 <Nav.Link href="/kanban-board">Boards</Nav.Link>
                                 {showAdminBoard && <Nav.Link href="/admin">Admin board</Nav.Link>}
-                                <Form style={{width:"70%"}}>
+                                <Form style={{ width: "70%" }}>
                                     <div className="search-bar-form">
-                                    <SearchAutocomplete > </SearchAutocomplete>
+                                        <SearchAutocomplete > </SearchAutocomplete>
                                     </div>
                                 </Form>
                             </Nav>
                             {currentUser ? (<NavDropdown className="ml-auto" title="User actions" id="responsive-nav-dropdown" align="end">
                                 <NavDropdown.Item href="/profile">User profile</NavDropdown.Item>
-                                <NavDropdown.Item href="/profile/edit">Edit account details</NavDropdown.Item>
+                                <NavDropdown.Item href="/edit/user">Edit account details</NavDropdown.Item>
                                 <NavDropdown.Divider />
                                 <NavDropdown.Item href="/login" onClick={this.logOut}>Logout</NavDropdown.Item>
                             </NavDropdown>) :
@@ -116,24 +115,22 @@ class BootstrapNavbar extends React.Component {
                     </Navbar>
 
                     <br />
-                    <div className="container mt-3" style={{position: "relative"}}>
-                        <Routes>
-                            <Route exact path="/" element={<Home />} />
-                            <Route exact path="/login" element={<Login />} />
-                            <Route exact path="/register" element={<Register />} />
-                            <Route exact path="/profile" element={<Profile />} />
-                            <Route exact path="/profile/edit" element={<EditProfile />} />
-                            <Route exact path="/search-result/:searchTerm" element={<SearchResult />} />
-                            <Route path="/user" element={<BoardUser />} />
-                            <Route path="/mod" element={<BoardModerator />} />
-                            <Route path="/admin" element={<BoardAdmin />} />
-                            <Route path="story/:storyId" element={<Story />} />
-                            <Route path="story-task/:storyTaskId" element={<StoryTask />} />
-                            <Route path="kanban-board" element={<BoardSelection />} />
-                            <Route path="kanban-board/:boardId" element={<Board />} />
-
-                        </Routes>
-                    </div>
+                    <Routes>
+                        <Route exact path="/" element={<Home />} />
+                        <Route exact path="/login" element={<Login />} />
+                        <Route exact path="/register" element={<Register />} />
+                        <Route exact path="/profile" element={<Profile />} />
+                        <Route exact path="/profile/:userId" element={<Profile />} />
+                        <Route exact path="/edit/user" element={<EditProfile />} />
+                        <Route exact path="/search-result/:searchTerm" element={<SearchResult />} />
+                        <Route path="/user" element={<BoardUser />} />
+                        <Route path="/mod" element={<BoardModerator />} />
+                        <Route path="/admin" element={<BoardAdmin />} />
+                        <Route path="story/:storyId" element={<Story />} />
+                        <Route path="story-task/:storyTaskId" element={<StoryTask />} />
+                        <Route path="kanban-board" element={<BoardSelection />} />
+                        <Route path="kanban-board/:boardId" element={<Board />} />
+                    </Routes>
                     <AuthVerify logOut={this.logOut} />
                 </Container>
             </div>

@@ -24,7 +24,7 @@ import Admin from '../board-admin.component';
 import '../sidebar.css';
 
 
-class EditUserLeftBar extends React.Component {
+class EditUserLeftBar extends React.Component {    
     constructor(props) {
         let generalInformationOptionsData = [
             { key: '1', value: 'Change name' },

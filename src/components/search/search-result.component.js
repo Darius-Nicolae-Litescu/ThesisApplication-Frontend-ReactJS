@@ -195,7 +195,7 @@ export const SearchResult = (props) => {
 
     return (
 
-        <Container>
+        <Container style={{ marginLeft: "10%" }}>
             <input style={{ width: "100%", height: "40%" }}
                 type="text"
                 name="searchValue"

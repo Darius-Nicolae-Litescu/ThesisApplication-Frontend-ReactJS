@@ -1,103 +1,88 @@
-import React, { Component } from "react";
-import { Navigate } from 'react-router-dom';
-import { connect } from "react-redux";
+import React from "react";
+import { useState, useEffect } from 'react';
+import {
+  BrowserRouter as Router,
+  Link,
+  Route,
+  Routes,
+  useParams,
+  useNavigate,
+} from "react-router-dom";
+
 import { Card, Container, ListGroup, Spinner } from 'react-bootstrap'
 import UserService from "../../services/user.service";
 import EditUserLeftBar from "./edit-user-details-left-bar.component"
+import { UserActivity } from "./user-activity.component";
 import "./center-spinner.css"
+import "./profile.css"
 
-class EditProfile extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoading: false,
-      userInformation: null,
-    };
-    this.loadProfileInfo = this.loadProfileInfo.bind(this);
+export const EditProfile = () => {
+  const [userInformation, setUserInformation] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate()
 
-  }
-
-  loadProfileInfo() {
-    this.setState({ isLoading: true })
+  useEffect(() => {
     UserService.whoami().then(
       response => {
         if (response != null) {
-          this.setState({
-            userInformation: response
-          });
-          this.setState({ isLoading: false })
+          setUserInformation(response);
+          setIsLoading(false);
         }
       },
       error => {
         console.log(error);
-        this.setState({
-          content:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
-        });
+        setIsLoading(false);
       }
     );
+  }, []);
+
+  if (isLoading) {
+    return <Spinner animation="grow" variant="primary" size="lg" className="center-spinner" />;
   }
 
-  componentDidMount() {
-    this.loadProfileInfo();
+  if (!userInformation) {
+    return navigate('/login');
   }
 
-  render() {
-    const { user: currentUser } = this.props;
-
-    if (!currentUser) {
-      return <Navigate to="/login" />;
-    }
-
-    return (this.state.isLoading ? <Spinner animation="grow" variant="primary" size="lg" className="center-spinner" /> :
-      <Container style={{ width: '100%' }}>
-        <EditUserLeftBar></EditUserLeftBar>
-        <Card
-          bg="light"
-          text="dark"
-          className="mb-2"
-          style={{ width: '50%' }}
-        >
-          <div className="card-header border-0">
-            <img className="rounded mx-auto d-block img-responsive" src="//placehold.it/200" alt="" />
-          </div>
-          <Card.Body>
-            <div className="card-block px-2">
-              <Card.Title>
-                <ListGroup>
-                  <ListGroup.Item action variant="light">Id: <strong>{currentUser.id}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">First name: <strong>{currentUser.firstName}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">Last name: <strong>{currentUser.lastName}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">Position name: <strong>{currentUser.positionName}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">Position seniority: <strong>{currentUser.positionSeniority}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">Username: <strong>{currentUser.username}</strong></ListGroup.Item>
-                  <ListGroup.Item action variant="light">Email: <strong>{currentUser.email}</strong></ListGroup.Item>
-                </ListGroup>
-              </Card.Title>
-              <Card.Title>
+  return (
+    <Container className="container-card" style={{ marginLeft: "15%" }}>
+          <EditUserLeftBar></EditUserLeftBar>
+          <Card style={{ marginLeft: "15%", width: "50%" }}>
+            <Card.Header>
+              <h3>Profile</h3>
+            </Card.Header>
+            <Card.Body>
+              <ListGroup variant="flush">
+              <ListGroup.Item>
+                  <b>ID:</b> {userInformation.id}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>First Name:</b> {userInformation.firstName}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Last Name:</b> {userInformation.lastName}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Position name:</b> {userInformation.positionName}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Position seniority:</b> {userInformation.positionSeniority}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Username:</b> {userInformation.username}
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <b>Email:</b> {userInformation.email}
+                </ListGroup.Item>
                 <ListGroup.Item action variant="danger">Authorities: </ListGroup.Item>
-                <Card.Footer>
-                  <ListGroup>
-                    {currentUser.roles &&
-                      currentUser.roles.map((role, index) => <ListGroup.Item action variant="info">{role}</ListGroup.Item>)}
-                  </ListGroup>
-                </Card.Footer>
-              </Card.Title>
-            </div>
-          </Card.Body>
-        </Card>
-      </Container>
-    );
-  }
+                <ListGroup>
+                  {userInformation.roles &&
+                    userInformation.roles.map((role, index) => <ListGroup.Item action variant="info">{role}</ListGroup.Item>)}
+                </ListGroup>
+              </ListGroup>
+            </Card.Body>
+          </Card>
+          {userInformation.id ? <UserActivity userId={userInformation.id}></UserActivity> : null}
+        </Container>
+  );
 }
-
-function mapStateToProps(state) {
-  const { user } = state.auth;
-  return {
-    user,
-  };
-}
-
-export default connect(mapStateToProps)(EditProfile);

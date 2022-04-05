@@ -26,7 +26,6 @@ label {
 .card{
     text-align: justify;
     text-align-last: left;
-    border-radius: 15px;
     border: 4px black;
     padding: 0px;
     align-content: start;
