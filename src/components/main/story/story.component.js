@@ -7,12 +7,16 @@ import {
     useParams,
 } from "react-router-dom";
 import Moment from 'react-moment';
-import { Card, Container, ListGroup, Spinner, Divider } from 'react-bootstrap'
+import { Card, Container, ListGroup, Spinner, Divider, Button } from 'react-bootstrap'
 import { FetchStoryData } from "./hooks/story-fetch";
 import { CommentList } from "./comment-list.component";
 import SubtaskList from "./story-subtask-list.component";
 import TextareaAutosize from 'react-textarea-autosize';
 import StoryGeneralInfo from './story-general-info.component'
+import StoryService from "../../../services/story.service";
+
+import "./story.css"
+
 
 function App() {
 
@@ -21,6 +25,7 @@ function App() {
     const { status, data, error } = FetchStoryData(storyId);
 
     const [currentData, setCurrentData] = useState([]);
+    const [currentError, setCurrentError] = useState();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
@@ -36,21 +41,36 @@ function App() {
     };
 
     useEffect(() => {
-        /*
         if (data.title) {
             setTitle(data.title);
         }
         if (data.description) {
             setDescription(data.description);
         }
-        */
     }, [data])
 
     function updateData(updatedData) {
         setCurrentData(updatedData);
     }
 
-    
+    function changeDetails() {
+        setCurrentError();
+        StoryService.updateStoryTitleAndDescription(storyId, title, description).then(
+            response => {
+                if (response != null) {
+                    setTitle(response.title);
+                    setDescription(response.description)
+                    toggleEditMode();
+                    console.log(response);
+                }
+            },
+            error => {
+                setCurrentError(currentError);
+                console.log(error);
+            }
+        )
+    }
+
     function toggleEditMode() {
         setIsEditActive(!isEditActive);
         setDeleteActive(!isDeleteActive);
@@ -75,14 +95,23 @@ function App() {
                             text="dark"
                             style={{ width: '100%' }}
                         >
+                            <Container>
+                                <div id="outer">
+                                    {isDeleteActive ? <div className="inner"><Button className="msgBtnBack">Delete</Button></div> : <div></div>}
+                                    <div className="inner"><Button onClick={toggleEditMode} className="msgBtn" >Edit</Button></div>
+                                    {isDeleteActive ? <div className="inner"><Button type="submit" onClick={() => changeDetails()} className="msgBtn2">Save changes</Button></div> : <div></div>}
+                                    <div></div>
+                                    {error && <div style={{ color: "red" }}>Could not update details, check console for more info</div>}
+                                </div>
+                            </Container>
                             <div style={{ "display": "grid" }} className="media-body p-2 shadow-sm rounded bg-light border">
-                                <h2>{data.title}</h2>
+                                <input className="story-title" onChange={e => setTitle(e.target.value)} value={title} disabled={!isEditActive} />
                                 <Moment format="YYYY-MM-DD HH:mm">{data.createdAt}</Moment>
                             </div>
                             <Card.Body>
                                 <br />
                                 <TextareaAutosize
-                                    className="disabled" disabled={!isEditActive} onChange={e => setDescription(e.target.value)} value={data.description} style={{ width: "100%" }} maxRows={50} minRows={5}>
+                                    className="disabled" disabled={!isEditActive} onChange={e => setDescription(e.target.value)} value={description} style={{ width: "100%" }} maxRows={50} minRows={5}>
                                 </TextareaAutosize>
                                 <div className="card-block px-2">
                                     <Card.Title style={{ maxHeight: '20%', overflow: 'auto' }}>

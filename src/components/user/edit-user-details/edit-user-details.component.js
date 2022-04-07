@@ -10,11 +10,11 @@ import {
 } from "react-router-dom";
 
 import { Card, Container, ListGroup, Spinner } from 'react-bootstrap'
-import UserService from "../../services/user.service";
+import UserService from "../../../services/user.service";
 import EditUserLeftBar from "./edit-user-details-left-bar.component"
-import { UserActivity } from "./user-activity.component";
-import "./center-spinner.css"
-import "./profile.css"
+import { UserActivity } from "../user-activity.component";
+import "../center-spinner.css"
+import "../profile.css"
 
 export const EditProfile = () => {
   const [userInformation, setUserInformation] = useState(null);
@@ -77,7 +77,7 @@ export const EditProfile = () => {
                 <ListGroup.Item action variant="danger">Authorities: </ListGroup.Item>
                 <ListGroup>
                   {userInformation.roles &&
-                    userInformation.roles.map((role, index) => <ListGroup.Item action variant="info">{role}</ListGroup.Item>)}
+                    userInformation.roles.map((role, index) => <ListGroup.Item key={index} action variant="info">{role}</ListGroup.Item>)}
                 </ListGroup>
               </ListGroup>
             </Card.Body>

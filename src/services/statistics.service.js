@@ -1,48 +1,45 @@
 import axios from "../axios";
 
 
-class UserService {
-  whoami() {
+class StatisticsService {
+
+
+  countFinishedStoriesAfterDate(numberOfMonths) {
     return axios
-      .get("users/whoami")
+      .get(`statistics/stories/finished/before/${numberOfMonths}`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;
       });
   }
 
-  getUserById(userId) {
+  countStoryUserComments() {
     return axios
-      .get(`users/${userId}`)
+      .get(`statistics/stories/user/comments`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;
       });
   }
 
-  getUserRecentActivity(id) {
-    return axios.get(`users/${id}/activity`)
+  countStoryTaskUserComments() {
+    return axios
+      .get(`statistics/stories/tasks/user/comments`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;
-      })
-      .catch(function (error) {
-        console.log(JSON.stringify(error))
       });
   }
 
-  getUsers(page, size) {
-    const params = new URLSearchParams([['page', page - 1], ['size', size]]);
-
-    return axios.get('users/pageable', { params })
+  countStoryComments()
+  {
+    return axios
+      .get(`statistics/stories/comments`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;
-      })
-      .catch(function (error) {
-        console.log(JSON.stringify(error))
       });
   }
 }
 
-export default new UserService();
+export default new StatisticsService();

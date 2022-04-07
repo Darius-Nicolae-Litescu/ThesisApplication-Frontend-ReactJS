@@ -73,12 +73,9 @@ class StoryTaskService {
   }
 
   getStoryTasks(page, size) {
-    return axios.get('story/task/', null, {
-      params: {
-        page,
-        size
-      }
-    })
+    const params = new URLSearchParams([['page', page - 1] , ['size', size]]);
+
+    return axios.get('story/task/pageable', {params})
       .then((response) => {
         response.data = response.data.success;
         return response.data;

@@ -9,26 +9,30 @@ const parseJwt = (token) => {
   }
 };
 
-class AuthVerify extends Component {
-  constructor(props) {
-    super(props);
-
-    history.listen(() => {
-      const user = JSON.parse(localStorage.getItem("user"));
-
-      if (user) {
-        const decodedJwt = parseJwt(user.accessToken);
-
-        if (decodedJwt.exp * 1000 < Date.now()) {
-          props.logOut();
-        }
-      }
-    });
+export function setUserToLocalStorage(user) {
+  localStorage.setItem("user", JSON.stringify(user));
+  if (getUserFromLocalStorage()) {
+    return true;
   }
-
-  render() {
-    return <div></div>;
-  }
+  return false;
 }
 
-export default AuthVerify;
+export function getUserFromLocalStorage() {
+  const user = JSON.parse(localStorage.getItem("user"));
+  return user;
+}
+
+export default function AuthVerify(props) {
+  const { logOut } = props;
+
+  history.listen(() => {
+    const user = getUserFromLocalStorage();
+    if (user) {
+      const decodedJwt = parseJwt(user.accessToken);
+      if (decodedJwt.exp * 1000 < Date.now()) {
+        logOut();
+      }
+    }
+  });
+  return (<div></div>);
+}

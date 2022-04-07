@@ -117,7 +117,7 @@ export default class SearchAutocomplete extends Component {
 
     render() {
         return (
-            <Container>
+            <Container  style={{display: "inline-flex"}}>
                 <AsyncTypeahead style={{ width: "100%", height: "40%" }}
                     id="typeahead"
                     delay={800}

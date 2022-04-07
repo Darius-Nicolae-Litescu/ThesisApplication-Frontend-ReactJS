@@ -1,19 +1,21 @@
 import axios from "../axios";
-
+import { setUserToLocalStorage } from "../common/auth-verify";
 class AuthService {
   login(username, password) {
     return axios
-      .post("users/login", null, { params: {
-        username,
-        password
-      }})
-      .then((response) => {
-        response.data = response.data.success;
-        if (response.data.jwtToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
+      .post("users/login", null, {
+        params: {
+          username,
+          password
         }
-
-        return response.data;
+      })
+      .then((response) => {
+        const loginResponse = response.data.success;
+        if (loginResponse.jwtToken) {
+          if (setUserToLocalStorage(loginResponse)) {
+            return loginResponse;
+          }
+        }
       });
   }
 

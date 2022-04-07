@@ -46,12 +46,9 @@ class StoryService {
   }
 
   getStories(page, size) {
-    return axios.get('story/', null, {
-      params: {
-        page,
-        size
-      }
-    })
+    const params = new URLSearchParams([['page', page - 1] , ['size', size]]);
+
+    return axios.get('story/pageable', {params})
       .then((response) => {
         response.data = response.data.success;
         return response.data;
@@ -61,6 +58,18 @@ class StoryService {
       });
   }
 
+  updateStoryTitleAndDescription(id, title, description) {
+    return axios
+      .put('story/details', {
+        id,
+        title,
+        description
+      })
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      });
+  }
 
   getStory(storyId) {
     return axios.get('story/' + storyId, null)
