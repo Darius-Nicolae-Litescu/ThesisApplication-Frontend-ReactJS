@@ -1,4 +1,4 @@
-.attachment{
+.attachment {
     margin: 13px 36px 15px 0px;
     border-style: solid;
     padding: .5em;
@@ -11,18 +11,18 @@
     letter-spacing: 0.3px;
 }
 
-.container-full{
+.container-full {
     display: inline;
     margin-top: 20px;
 }
 
-.image-style{
+.image-style {
     flex: 1;
     width: 100px;
     height: 100px;
 }
 
-.bottom-container{
+.bottom-container {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -31,11 +31,11 @@
     align-content: center;
 }
 
-.date-attachment-moment-format{
+.date-attachment-moment-format {
     font-size: 15px;
     font: caption;
 }
 
-.date-comment-moment-format{
+.date-comment-moment-format {
     font: caption;
 }

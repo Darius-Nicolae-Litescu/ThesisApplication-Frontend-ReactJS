@@ -18,12 +18,12 @@ class SearchService {
         });
         return axios
             .post('elasticsearch/query', {
-                    term,
-                    returnFields,
-                    fields,
-                    from,
-                    size,
-                    collections
+                term,
+                returnFields,
+                fields,
+                from,
+                size,
+                collections
             })
             .then((response) => {
                 return response;

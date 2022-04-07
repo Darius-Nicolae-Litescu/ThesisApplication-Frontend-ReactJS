@@ -1,23 +1,22 @@
-#outer
-{
-    width:100%;
+#outer {
+    width: 100%;
     text-align: center;
 }
-.inner
-{
+
+.inner {
     display: block;
     float: right;
     margin: 0px 5px 5px 5px;
 }
 
-.story-task-title{
+.story-task-title {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 38px;
     font-weight: bold;
-    color:black;
+    color: black;
 }
 
-.story-task-description{
+.story-task-description {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
 }
@@ -35,4 +34,4 @@
 
 textarea:disabled {
     color: black;
-  }
+}

@@ -19,9 +19,9 @@ class CategoryService {
 
   getAllCategories() {
     return axios.get('category/').then((response) => {
-        response.data = response.data.success;
-        return response.data;
-      })
+      response.data = response.data.success;
+      return response.data;
+    })
       .catch(function (error) {
         console.log(JSON.stringify(error))
       });

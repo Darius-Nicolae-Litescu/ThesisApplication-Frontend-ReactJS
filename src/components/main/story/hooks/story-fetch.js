@@ -20,8 +20,7 @@ export const FetchStoryData = (storyId) => {
             dispatch({ type: 'FETCHING' });
             StoryService.getStory(storyId).then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -30,8 +29,7 @@ export const FetchStoryData = (storyId) => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);

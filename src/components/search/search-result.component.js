@@ -206,7 +206,7 @@ export const SearchResult = (props) => {
 
             <div className="searchMainContainer">
                 {finishedMappingObjects &&
-                    <FilterWrapper searchResultTypes={collections} setFinalFilter={changeFinalFilter} isLoading = {isLoading} isLoadingDataFinished = {isLoadingDataFinished} ></FilterWrapper>
+                    <FilterWrapper searchResultTypes={collections} setFinalFilter={changeFinalFilter} isLoading={isLoading} isLoadingDataFinished={isLoadingDataFinished} ></FilterWrapper>
                 }
                 <div className="cardsList">
                     {hitsCount != null && <h2 className="searchFont">Search results count: {hitsCount}</h2>}

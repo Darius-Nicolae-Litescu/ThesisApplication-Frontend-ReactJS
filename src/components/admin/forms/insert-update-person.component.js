@@ -23,10 +23,10 @@ const JSONSchema = {
       "title": "Last name"
     },
     "birthDate": {
-        "type": "string",
-        "title": "Birth date",
-        "format": "date"
-      }
+      "type": "string",
+      "title": "Birth date",
+      "format": "date"
+    }
   }
 };
 
@@ -47,11 +47,11 @@ const UISchema = {
 };
 
 function InsertUpdatePersonForm() {
-    return (
-        <div className="InsertOrUpdatePerson">
-            <Form schema={JSONSchema} uiSchema={UISchema} />
-        </div>
-    );
+  return (
+    <div className="InsertOrUpdatePerson">
+      <Form schema={JSONSchema} uiSchema={UISchema} />
+    </div>
+  );
 }
 
 export default InsertUpdatePersonForm;

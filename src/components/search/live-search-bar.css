@@ -1,12 +1,12 @@
-
-.card-text, .card-footer {
+.card-text,
+.card-footer {
   word-wrap: break-word;
   text-overflow: ellipsis;
   overflow: hidden;
   width: 100%;
 }
 
-.card-header{
+.card-header {
   width: auto;
 }
 
@@ -33,6 +33,6 @@
   font-size: 13px;
 }
 
-.rbt-menu{
-  max-height: 55vh!important;
+.rbt-menu {
+  max-height: 55vh !important;
 }

@@ -4,12 +4,12 @@
     object-fit: cover;
 }
 
-.card-title{
-    font-size:20px;
+.card-title {
+    font-size: 20px;
     font-weight: unset;
 }
 
-.input-general{
+.input-general {
     width: 100px;
 }
 
@@ -19,11 +19,11 @@ label {
     text-align: right;
 }
 
-.input-text.color{
+.input-text.color {
     color: black;
 }
 
-.card{
+.card {
     text-align: justify;
     text-align-last: left;
     border: 4px black;
@@ -32,7 +32,7 @@ label {
     background-color: white;
 }
 
-.priority-color{
+.priority-color {
     margin-bottom: 6px;
     border-radius: 25px;
     padding: 2px;

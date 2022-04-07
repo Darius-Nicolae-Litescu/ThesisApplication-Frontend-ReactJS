@@ -22,7 +22,7 @@ export const MainComponent = () => {
             setCurrentUser(user);
             setShowModeratorBoard(user.roles.includes("MODERATOR"));
             setShowAdminBoard(user.roles.includes("ADMIN"));
-        } else{
+        } else {
             AuthService.logout();
         }
     }, [])

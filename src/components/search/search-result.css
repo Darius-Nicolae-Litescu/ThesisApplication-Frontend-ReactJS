@@ -1,15 +1,15 @@
-
-
-  .searchMainContainer{
-      position: unset;
-    }
-  .cardsList{ 
-    width: 70%;
-    padding-right: 5%;
-         right: 0;
-    position: absolute;
+.searchMainContainer {
+  position: unset;
 }
-.searchFont{
-    padding-top: 6%;
-    font-weight: unset;
+
+.cardsList {
+  width: 70%;
+  padding-right: 5%;
+  right: 0;
+  position: absolute;
+}
+
+.searchFont {
+  padding-top: 6%;
+  font-weight: unset;
 }

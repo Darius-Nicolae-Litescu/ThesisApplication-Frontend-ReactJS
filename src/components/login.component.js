@@ -54,7 +54,7 @@ export const Login = () => {
   }
 
   const refreshPage = () => {
-    window.location.reload(); 
+    window.location.reload();
   }
 
   const handleLogin = (e) => {

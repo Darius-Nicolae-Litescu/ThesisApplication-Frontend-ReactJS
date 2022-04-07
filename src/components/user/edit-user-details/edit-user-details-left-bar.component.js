@@ -53,7 +53,7 @@ export default function EditUserLeftBar() {
                                 {item.options.map((itemOptions) => {
                                     return <Dropdown.Item key={itemOptions.value} onClick={() => onItemClick(item.key, itemOptions.key)}>
                                         {itemOptions.value}
-                                        </Dropdown.Item>
+                                    </Dropdown.Item>
                                 })}
                             </DropdownButton>
                         })}

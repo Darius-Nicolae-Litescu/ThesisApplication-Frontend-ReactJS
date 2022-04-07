@@ -46,11 +46,11 @@ const UISchema = {
 };
 
 function InsertUpdatePriorityForm() {
-    return (
-        <div className="InsertOrUpdatePriority">
-            <Form schema={JSONSchema} uiSchema={UISchema} />
-        </div>
-    );
+  return (
+    <div className="InsertOrUpdatePriority">
+      <Form schema={JSONSchema} uiSchema={UISchema} />
+    </div>
+  );
 }
 
 export default InsertUpdatePriorityForm;

@@ -18,8 +18,7 @@ export const FetchFinishedStoriesData = (numberOfMonths) => {
             dispatch({ type: 'FETCHING' });
             StatisticsService.countFinishedStoriesAfterDate(numberOfMonths).then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -28,8 +27,7 @@ export const FetchFinishedStoriesData = (numberOfMonths) => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);

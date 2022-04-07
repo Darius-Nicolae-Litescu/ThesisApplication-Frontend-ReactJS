@@ -29,7 +29,7 @@ export default function StorySubtask(props) {
                   <h4 className="mt-0 mb-1 text-muted">{createdBy.username}</h4>
                   <Moment style={{ font: "caption" }} className="mt-0 mb-1 text-muted" format="YYYY-MM-DD HH:mm">{createdAt}</Moment>
                 </div>
-                <div style={{display: "inline-grid", alignContent: "center"}}>
+                <div style={{ display: "inline-grid", alignContent: "center" }}>
                   <h4 className="mt-0 mb-1 text-muted">Status: {status}</h4>
                   <h4 className="mt-0 mb-1 text-muted">Story points: {storyPoints}</h4>
                 </div>

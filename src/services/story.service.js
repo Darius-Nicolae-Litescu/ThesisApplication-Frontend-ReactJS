@@ -46,9 +46,9 @@ class StoryService {
   }
 
   getStories(page, size) {
-    const params = new URLSearchParams([['page', page - 1] , ['size', size]]);
+    const params = new URLSearchParams([['page', page - 1], ['size', size]]);
 
-    return axios.get('story/pageable', {params})
+    return axios.get('story/pageable', { params })
       .then((response) => {
         response.data = response.data.success;
         return response.data;

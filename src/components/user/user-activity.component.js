@@ -20,7 +20,7 @@ export const UserActivity = (props) => {
     if (status === "fetched") {
         return (
             <Container>
-                <Card style = {{width: "70%"}}>
+                <Card style={{ width: "70%" }}>
                     <Card.Header>
                         <Card.Title>User Activity</Card.Title>
                     </Card.Header>
@@ -28,7 +28,7 @@ export const UserActivity = (props) => {
 
                         <ListGroup variant="flush">
                             {data.map(story => (
-                                <a key={story.id} style={{textDecoration: "none"}} href={`/story/${story.id}`}>
+                                <a key={story.id} style={{ textDecoration: "none" }} href={`/story/${story.id}`}>
                                     <ListGroup.Item>
                                         <Card.Title>{story.title}</Card.Title>
                                         <Card.Text>{story.description}</Card.Text>

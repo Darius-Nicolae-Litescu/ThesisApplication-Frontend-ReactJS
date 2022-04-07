@@ -25,7 +25,7 @@ export default class BoardStoryCard extends Component {
                     className="mb-2"
                     style={{ width: '100%', height: '100%' }}
                 >
-                    <Card.Body  style={{background: this.props.story.isFinished ? "crimson" : "#00008B", color: "white"  }}>
+                    <Card.Body style={{ background: this.props.story.isFinished ? "crimson" : "#00008B", color: "white" }}>
                         <div className="card-block px-2">
                             <Card.Title>{this.props.story.title}</Card.Title>
                             <h3 className="subtitle">Created by username: {this.props.story.createdBy.username}</h3>

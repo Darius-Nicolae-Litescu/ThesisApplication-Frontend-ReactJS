@@ -24,7 +24,7 @@ export const SelectCategories = (props) => {
     return (
         <nav className="d-none d-md-block col-sm-2 col-md-2 col-lg-2 col-xl-2 sidebar">
             <div className="sidebar">
-                <ListGroup style={{ marginTop: "50%",borderRadius: "20px" }}>
+                <ListGroup style={{ marginTop: "50%", borderRadius: "20px" }}>
                     <ListGroup.Item style={{ display: "grid", textAlign: "right", justifyItems: "end", textAlignLast: "end" }}>
                         {optionsData.map((item) => {
                             return <DropdownButton

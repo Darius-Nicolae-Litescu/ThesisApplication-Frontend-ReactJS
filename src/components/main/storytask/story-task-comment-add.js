@@ -17,8 +17,7 @@ export const AddStoryTaskComment = (commentText, commentAttachment) => {
             dispatch({ type: 'REQUESTING' });
             StoryTaskService.getStoryTask(storyId).then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -27,8 +26,7 @@ export const AddStoryTaskComment = (commentText, commentAttachment) => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);

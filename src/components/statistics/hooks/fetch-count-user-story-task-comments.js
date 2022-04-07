@@ -17,8 +17,7 @@ export const FetchCountUserStoryTaskCommentsData = () => {
             dispatch({ type: 'FETCHING' });
             StatisticsService.countStoryTaskUserComments().then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -27,8 +26,7 @@ export const FetchCountUserStoryTaskCommentsData = () => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);

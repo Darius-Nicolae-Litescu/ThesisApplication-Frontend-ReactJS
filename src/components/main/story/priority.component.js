@@ -46,7 +46,7 @@ export default function Priority(props) {
                     <Accordion.Collapse eventKey="1">
                         <Card.Body>
                             <label htmlFor="id" >Id: </label>
-                            <input id="id"  value={priority.id} disabled={!isEditActive} />
+                            <input id="id" value={priority.id} disabled={!isEditActive} />
                             <br></br>
                             <label htmlFor="description">Description: </label>
                             <br></br>

@@ -37,11 +37,11 @@ const UISchema = {
 };
 
 function InsertUpdateSoftwareApplicationForm() {
-    return (
-        <div className="InsertOrUpdateSoftwareApplication">
-            <Form schema={JSONSchema} uiSchema={UISchema} />
-        </div>
-    );
+  return (
+    <div className="InsertOrUpdateSoftwareApplication">
+      <Form schema={JSONSchema} uiSchema={UISchema} />
+    </div>
+  );
 }
 
 export default InsertUpdateSoftwareApplicationForm;

@@ -12,13 +12,12 @@ export const FetchBoardsData = () => {
 
     useEffect(() => {
         let cancelRequest = false;
-        
+
         const getBoardData = async () => {
             dispatch({ type: 'FETCHING' });
             BoardService.getAllBoards().then(
                 response => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     if (response != null) {
@@ -27,8 +26,7 @@ export const FetchBoardsData = () => {
                     }
                 },
                 error => {
-                    if(cancelRequest) 
-                    {
+                    if (cancelRequest) {
                         return;
                     }
                     console.log(error);

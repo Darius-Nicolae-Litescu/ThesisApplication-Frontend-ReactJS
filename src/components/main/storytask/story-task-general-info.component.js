@@ -54,7 +54,7 @@ export default function StoryGeneralInfo(props) {
 
 
     return (
-        <div className="card flex-row flex-wrap" style ={{width: "97%"}}>
+        <div className="card flex-row flex-wrap" style={{ width: "97%" }}>
             <div id="outer">
                 <div className="inner"><Button onClick={toggleEditMode} className="msgBtn" >Edit</Button></div>
                 {isEditActive ? <div className="inner"><Button type="submit" onClick={() => changeDetails()} className="msgBtn2">Save changes</Button></div> : <div></div>}

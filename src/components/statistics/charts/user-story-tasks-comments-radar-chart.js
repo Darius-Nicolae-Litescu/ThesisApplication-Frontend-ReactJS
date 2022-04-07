@@ -9,7 +9,7 @@ import {
 import { Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 import { getRandomColor, defaultProps } from "../utils";
-import {FetchCountUserStoryTaskCommentsData} from "../hooks/fetch-count-user-story-task-comments";
+import { FetchCountUserStoryTaskCommentsData } from "../hooks/fetch-count-user-story-task-comments";
 
 export default function UserStoryCommentsRadarChart() {
     const { status, data: countUserStoryTaskCommentsData, error } = FetchCountUserStoryTaskCommentsData();

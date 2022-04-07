@@ -50,7 +50,7 @@ export const FilterWrapper = (props) => {
                     {searchResultTypes.includes("user") ? <UserFilter setUserFilter={setUserFilter} keepFormData={keepFormData} setKeepFormData={setKeepFormData}></UserFilter> : <></>}
                     {searchResultTypes.includes("comment") ? <CommentFilter setCommentFilter={setCommentFilter} keepFormData={keepFormData} setKeepFormData={setKeepFormData}></CommentFilter> : <></>}
                 </div>
-            : 
+            :
             <div></div>
     );
 }

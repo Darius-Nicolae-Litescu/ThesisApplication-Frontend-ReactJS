@@ -28,7 +28,7 @@ export const BoardSelection = (props) => {
 
   return (
     <Container>
-      <Button className = "AddBoardButton" onClick={() => {setEnableBoardForm(!enableBoardForm)}}>Add board</Button>
+      <Button className="AddBoardButton" onClick={() => { setEnableBoardForm(!enableBoardForm) }}>Add board</Button>
       <div className="board-selection">
         <AsyncTypeahead
           id="board-selection"

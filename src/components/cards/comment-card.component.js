@@ -32,7 +32,7 @@ export default class CommentCard extends Component {
                             Comment
                         </Card.Title>
                         <Card.Text>
-                        "{this.props.comment.content}"
+                            "{this.props.comment.content}"
                             <h3 class="subtitle">Posted by username: {this.props.comment.postedByUsername}</h3>
                             <h3 class="subtitle">Posted by email: {this.props.comment.postedByEmail}</h3>
                             <Moment className="createdDate" format="YYYY-MM-DD HH:mm">{this.props.comment.postedAt}</Moment>

@@ -37,9 +37,9 @@ class BoardService {
 
   insertBoard(board) {
     return axios.post("board/", board)
-    .then((response) => {
-      response.data = response.data.success;
-      return response.data;
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
       })
       .catch(function (error) {
         console.log(JSON.stringify(error))

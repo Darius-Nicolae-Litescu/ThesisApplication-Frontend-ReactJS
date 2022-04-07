@@ -53,15 +53,15 @@ function insertBoardData(board) {
   );
 }
 
-function processFormData(formData){
+function processFormData(formData) {
   let board = {};
-  board = {name: formData.name, ...board};
+  board = { name: formData.name, ...board };
   formData.columnList.map((columnName, index) => {
-     let column = {
-       columnOrder: index + 1, title: columnName
-      };
-      board.columnList = board.columnList || [];
-      board.columnList.push(column);
+    let column = {
+      columnOrder: index + 1, title: columnName
+    };
+    board.columnList = board.columnList || [];
+    board.columnList.push(column);
   });
   return board;
 }

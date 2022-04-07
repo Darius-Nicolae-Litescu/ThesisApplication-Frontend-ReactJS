@@ -46,43 +46,43 @@ export const EditProfile = () => {
 
   return (
     <Container className="container-card" style={{ marginLeft: "15%" }}>
-          <EditUserLeftBar></EditUserLeftBar>
-          <Card style={{ marginLeft: "15%", width: "50%" }}>
-            <Card.Header>
-              <h3>Profile</h3>
-            </Card.Header>
-            <Card.Body>
-              <ListGroup variant="flush">
-              <ListGroup.Item>
-                  <b>ID:</b> {userInformation.id}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>First Name:</b> {userInformation.firstName}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Last Name:</b> {userInformation.lastName}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Position name:</b> {userInformation.positionName}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Position seniority:</b> {userInformation.positionSeniority}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Username:</b> {userInformation.username}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <b>Email:</b> {userInformation.email}
-                </ListGroup.Item>
-                <ListGroup.Item action variant="danger">Authorities: </ListGroup.Item>
-                <ListGroup>
-                  {userInformation.roles &&
-                    userInformation.roles.map((role, index) => <ListGroup.Item key={index} action variant="info">{role}</ListGroup.Item>)}
-                </ListGroup>
-              </ListGroup>
-            </Card.Body>
-          </Card>
-          {userInformation.id ? <UserActivity userId={userInformation.id}></UserActivity> : null}
-        </Container>
+      <EditUserLeftBar></EditUserLeftBar>
+      <Card style={{ marginLeft: "15%", width: "50%" }}>
+        <Card.Header>
+          <h3>Profile</h3>
+        </Card.Header>
+        <Card.Body>
+          <ListGroup variant="flush">
+            <ListGroup.Item>
+              <b>ID:</b> {userInformation.id}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>First Name:</b> {userInformation.firstName}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>Last Name:</b> {userInformation.lastName}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>Position name:</b> {userInformation.positionName}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>Position seniority:</b> {userInformation.positionSeniority}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>Username:</b> {userInformation.username}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <b>Email:</b> {userInformation.email}
+            </ListGroup.Item>
+            <ListGroup.Item action variant="danger">Authorities: </ListGroup.Item>
+            <ListGroup>
+              {userInformation.roles &&
+                userInformation.roles.map((role, index) => <ListGroup.Item key={index} action variant="info">{role}</ListGroup.Item>)}
+            </ListGroup>
+          </ListGroup>
+        </Card.Body>
+      </Card>
+      {userInformation.id ? <UserActivity userId={userInformation.id}></UserActivity> : null}
+    </Container>
   );
 }

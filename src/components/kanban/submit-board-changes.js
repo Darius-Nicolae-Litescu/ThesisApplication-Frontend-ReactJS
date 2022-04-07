@@ -13,7 +13,7 @@ import "./board.css"
 
 
 export default function SubmitBoardChanges(props) {
-    const { boardId, columns, updateColumns} = props;
+    const { boardId, columns, updateColumns } = props;
     const updateBoard = () => {
 
         const newColumns = columns.map(column => {
@@ -29,7 +29,7 @@ export default function SubmitBoardChanges(props) {
             }
         })
 
-        BoardService.updateBoard({id: boardId, columnList: newColumns}).then(
+        BoardService.updateBoard({ id: boardId, columnList: newColumns }).then(
             response => {
                 if (response != null) {
                     updateColumns(response.columnList)
@@ -42,6 +42,6 @@ export default function SubmitBoardChanges(props) {
     }
 
     return (
-    <Button onClick={() => updateBoard()} className="submit-changes-button">Save changes</Button>
+        <Button onClick={() => updateBoard()} className="submit-changes-button">Save changes</Button>
     );
 }
