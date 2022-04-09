@@ -6,12 +6,10 @@ import TextareaAutosize from 'react-textarea-autosize';
 import "./story-general-info.css"
 
 function ContextAwareToggle({ children, eventKey, callback }) {
+
     const { activeEventKey } = useContext(AccordionContext);
 
-    const decoratedOnClick = useAccordionButton(
-        eventKey,
-        () => callback && callback(eventKey),
-    );
+    const decoratedOnClick = useAccordionButton(eventKey, () => callback && callback(eventKey));
 
     const isCurrentEventKey = activeEventKey === eventKey;
 
@@ -27,26 +25,42 @@ function ContextAwareToggle({ children, eventKey, callback }) {
 }
 
 export default function Priority(props) {
-    const { priority, isEditActive } = props;
+    const { priority, isEditActive, priorityData, setPriorityId } = props;
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [level, setLevel] = useState('');
 
+    const handleChange = (event) => {
+        event.preventDefault();
+        var target = event.target;
+        let priorityId = parseInt(target.priority.value);
+        setPriorityId(priorityId);
+    };
 
     return (
         <Accordion defaultActiveKey="0">
             <div className="general-card">
                 <Card className="card-text-placement">
                     <ContextAwareToggle eventKey="1">
-                        <label htmlFor="title" className="priority-color" >Priority: </label>
-                        <input id="title" className="input-text.color" onChange={e => setTitle(e.target.value)} value={priority.title} disabled={!isEditActive} />
-                        <span>{"\u2193"}</span>
+                        <div style={{ display: "inline-flex", alignItems: "center" }}>
+                            <label htmlFor="title" className="priority-color" >Priority: </label>
+                            <input id="title" className="input-text.color" onChange={e => setTitle(e.target.value)} value={priority.title} disabled={!isEditActive} />
+                            <span>{"\u2193"}</span>
+                        </div>
                     </ContextAwareToggle>
                     <Accordion.Collapse eventKey="1">
                         <Card.Body>
-                            <label htmlFor="id" >Id: </label>
-                            <input id="id" value={priority.id} disabled={!isEditActive} />
+                            <label htmlFor="priorityId" >Id: </label>
+                            {isEditActive ?
+                                <select id="priorityId" onChange={handleChange} disabled={!isEditActive}>
+                                    {priorityData.map(priority => (
+                                        <option key={priority.id} value={priority.id}>{priority.id} : {priority.title}</option>
+                                    ))}
+                                </select>
+                                :
+                                <input id="priorityId" value={priority.id} disabled={!isEditActive} />
+                            }
                             <br></br>
                             <label htmlFor="description">Description: </label>
                             <br></br>

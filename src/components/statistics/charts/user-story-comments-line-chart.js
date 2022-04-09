@@ -9,7 +9,7 @@ import {
 import { Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 import { getRandomColor, defaultProps } from "../utils";
-import { FetchCountUserStoryCommentsData } from "../hooks/fetch-count-user-story-comments";
+import { FetchCountUserStoryCommentsData } from "../../hooks/statistics/fetch-count-user-story-comments";
 
 export default function UserStoryCommentsLineChart() {
     const { status, data: countUserStoryCommentsData, error } = FetchCountUserStoryCommentsData();

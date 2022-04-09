@@ -1,14 +1,14 @@
 import axios from "../axios";
 
 class StoryService {
-  addStory(description, category, priority) {
+  addStory(title, description, categoryIds, priorityId, softwareApplicationId) {
     return axios
       .post('story/', {
-        data: {
-          description,
-          category,
-          description
-        }
+        title,
+        description,
+        categoryIds,
+        priorityId,
+        softwareApplicationId
       })
       .then((response) => {
         response.data = response.data.success;
@@ -73,6 +73,17 @@ class StoryService {
 
   getStory(storyId) {
     return axios.get('story/' + storyId, null)
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      });
+  }
+
+  deleteStory(storyId) {
+    return axios.delete('story/' + storyId, null)
       .then((response) => {
         response.data = response.data.success;
         return response.data;

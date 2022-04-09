@@ -3,11 +3,9 @@ import { setUserToLocalStorage } from "../common/auth-verify";
 class AuthService {
   login(username, password) {
     return axios
-      .post("users/login", null, {
-        params: {
-          username,
-          password
-        }
+      .post("users/login", {
+        username,
+        password
       })
       .then((response) => {
         const loginResponse = response.data.success;

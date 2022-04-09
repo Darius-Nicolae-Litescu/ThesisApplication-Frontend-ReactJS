@@ -5,10 +5,11 @@ import {
     Route,
     Routes,
     useParams,
+    useNavigate
 } from "react-router-dom";
 import Moment from 'react-moment';
 import { Card, Container, ListGroup, Spinner, Divider, Button } from 'react-bootstrap'
-import { FetchStoryData } from "./hooks/story-fetch";
+import { FetchStoryData } from "../../hooks/fetch-story";
 import { CommentList } from "./comment-list.component";
 import SubtaskList from "./story-subtask-list.component";
 import TextareaAutosize from 'react-textarea-autosize';
@@ -19,6 +20,8 @@ import "./story.css"
 
 
 function App() {
+
+    const navigate = useNavigate();
 
     const { storyId } = useParams();
 
@@ -70,6 +73,9 @@ function App() {
             }
         )
     }
+    const redirectToAddStoryTask = () => {
+        navigate(`/add-story-task/${storyId}`);
+    }
 
     function toggleEditMode() {
         setIsEditActive(!isEditActive);
@@ -89,6 +95,8 @@ function App() {
                         storyId: storyId, createdBy: data.createdBy, priority: data.priority, softwareApplication: data.softwareApplication,
                         isFinished: data.isFinished, totalStoryPoints: data.totalStoryPoints
                     }}></StoryGeneralInfo>
+
+
                     <Container style={{ width: '100%', height: '100%' }}>
                         <Card
                             bg="light"
@@ -97,6 +105,7 @@ function App() {
                         >
                             <Container>
                                 <div id="outer">
+                                    <div className="inner"><Button className="add-story-task-button" onClick={redirectToAddStoryTask}>Add new Story Task</Button> </div>
                                     {isDeleteActive ? <div className="inner"><Button className="msgBtnBack">Delete</Button></div> : <div></div>}
                                     <div className="inner"><Button onClick={toggleEditMode} className="msgBtn" >Edit</Button></div>
                                     {isDeleteActive ? <div className="inner"><Button type="submit" onClick={() => changeDetails()} className="msgBtn2">Save changes</Button></div> : <div></div>}

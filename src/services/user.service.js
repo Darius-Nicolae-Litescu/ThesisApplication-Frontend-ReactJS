@@ -11,9 +11,18 @@ class UserService {
       });
   }
 
+  getBasicUserData() {
+    return axios
+      .get(`users/all`)
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      });
+  }
+
   getUserById(userId) {
     return axios
-      .get(`users/${userId}`)
+      .get(`users/id/${userId}`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;
@@ -22,6 +31,17 @@ class UserService {
 
   getUserRecentActivity(id) {
     return axios.get(`users/${id}/activity`)
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      });
+  }
+
+  deleteUser(userId) {
+    return axios.delete(`users/${userId}`)
       .then((response) => {
         response.data = response.data.success;
         return response.data;

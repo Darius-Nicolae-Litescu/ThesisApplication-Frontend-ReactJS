@@ -1,0 +1,29 @@
+.searchMainContainer {
+  position: unset;
+}
+
+.cardsList {
+  width: 70%;
+  padding-right: 5%;
+  right: 0;
+  position: absolute;
+}
+
+.searchFont {
+  padding-top: 6%;
+  font-weight: unset;
+}
+
+.add-story-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0;
+  margin-right: 5%;
+  border: none;
+  background: none;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -9,7 +9,7 @@ import {
 import { Button } from 'react-bootstrap';
 import { Container } from 'react-bootstrap';
 import { getRandomColor, defaultProps } from "../utils";
-import { FetchFinishedStoriesData } from "../hooks/fetch-finished-stories";
+import { FetchFinishedStoriesData } from "../../hooks/statistics/fetch-finished-stories";
 
 export default function FinishedStoriesPieChart() {
     const { status, data: fetchFinishedStoriesData, error } = FetchFinishedStoriesData(12);

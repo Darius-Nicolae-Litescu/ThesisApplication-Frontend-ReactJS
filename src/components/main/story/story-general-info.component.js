@@ -15,12 +15,15 @@ import downloadFile from '../../../helpers/downloadFile'
 
 import StoryTaskService from "../../../services/story-task.service";
 import Priority from './priority.component';
+import { FetchPriorityData } from '../../hooks/fetch-all-priorities';
 
 import "./story-general-info.css"
 
 
 export default function StoryGeneralInfo(props) {
     const { storyId, createdBy, priority, softwareApplication, isFinished, totalStoryPoints } = props.storyGeneralInfo;
+    const { fetchPriorityDataStatus, data: priorityData, fetchPriorityDataError } = FetchPriorityData();
+
     const [isEditActive, setIsEditActive] = useState(false);
 
     const [data, setData] = useState([]);
@@ -29,6 +32,8 @@ export default function StoryGeneralInfo(props) {
     const [currentPriority, setPriority] = useState(priority);
     const [currentSoftwareApplication, setSoftwareApplication] = useState(softwareApplication);
 
+    const [priorityId , setPriorityId] = useState(priority.id);
+    
 
 
     function toggleEditMode() {
@@ -81,7 +86,7 @@ export default function StoryGeneralInfo(props) {
                 <p className="card-text">Finished: {isFinished ? "Yes" : "No"}</p>
                 <p className="card-text">Total story points: {totalStoryPointsText()}</p>
 
-                <Priority isEditActive={isEditActive} priority={priority}></Priority>
+                <Priority setPriorityId={setPriorityId} priorityData={priorityData} isEditActive={isEditActive} priority={priority}></Priority>
 
                 {error && <div style={{ color: "red" }}>Could not update details, check console for more info</div>}
             </div>

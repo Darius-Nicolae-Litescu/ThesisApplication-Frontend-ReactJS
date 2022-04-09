@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 import Moment from 'react-moment';
 import { Card, Container, ListGroup, Spinner, Divider, Button } from 'react-bootstrap'
-import { FetchStoryTaskData } from "./hooks/story-task-fetch";
+import { FetchStoryTaskData } from "../../hooks/fetch-story-task";
 import { CommentList } from "./comment-list.component";
 import TextareaAutosize from 'react-textarea-autosize';
 import StoryGeneralInfo from './story-task-general-info.component'

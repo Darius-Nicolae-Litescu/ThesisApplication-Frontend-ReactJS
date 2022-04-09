@@ -45,6 +45,19 @@ class BoardService {
         console.log(JSON.stringify(error))
       });
   }
+
+  addAllStoriesToBoard(boardId) {
+    const params = new URLSearchParams();
+    params.append('boardId', boardId);
+    return axios.put("board/add/stories/all", params)
+      .then((response) => {
+        response.data = response.data.success;
+        return response.data;
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error))
+      });
+  }
 }
 
 export default new BoardService();

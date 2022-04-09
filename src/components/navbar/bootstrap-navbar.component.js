@@ -13,7 +13,7 @@ export const BootStrapNavBar = (props) => {
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
                 <Nav className="container-fluid">
-                    <Nav.Link href="/ticket">Ticket list</Nav.Link>
+                    <Nav.Link href="/ticket-list">Ticket list</Nav.Link>
                     <Nav.Link href="/kanban-board">Boards</Nav.Link>
                     <Nav.Link href="/statistics">Statistics</Nav.Link>
                     {showAdminBoard && <Nav.Link href="/admin">Admin board</Nav.Link>}

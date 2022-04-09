@@ -7,7 +7,7 @@ import {
   Routes,
   useParams,
 } from "react-router-dom";
-import DynamicTable from "./forms/dynamic-table-component";
+import DynamicTable from "./table/dynamic-table-component";
 import { SelectCategories } from "./select-categories.component";
 import { Container } from "react-bootstrap";
 
