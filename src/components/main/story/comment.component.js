@@ -2,7 +2,7 @@ import React from "react";
 import Moment from 'react-moment';
 import { Image, Container } from 'react-bootstrap';
 import { FileIcon, defaultStyles } from 'react-file-icon';
-import downloadFile from '../../../helpers/downloadFile'
+import {downloadFile} from '../../../helpers/downloadUtils'
 import TextareaAutosize from 'react-textarea-autosize';
 
 import "./story-font.css"

@@ -11,7 +11,7 @@ import Moment from 'react-moment';
 
 import { Image, Container, Card, Button } from 'react-bootstrap';
 import { FileIcon, defaultStyles } from 'react-file-icon';
-import downloadFile from '../../../helpers/downloadFile'
+import {downloadFile} from '../../../helpers/downloadUtils'
 
 import StoryTaskService from "../../../services/story-task.service";
 import Priority from './priority.component';

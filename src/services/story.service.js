@@ -20,7 +20,7 @@ class StoryService {
   }
 
   addComment(content, storyId, attachments) {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("storyId", storyId);
     formData.append("content", content);
     if (attachments) {
@@ -39,8 +39,7 @@ class StoryService {
     }).then((response) => {
       response.data = response.data.success;
       return response.data;
-    })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(JSON.stringify(error))
       });
   }

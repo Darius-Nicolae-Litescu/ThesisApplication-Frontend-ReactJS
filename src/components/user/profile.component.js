@@ -13,12 +13,24 @@ import UserService from "../../services/user.service";
 import { UserActivity } from "./user-activity.component";
 import "./center-spinner.css"
 import "./profile.css"
+import { serveImage, constructProfileImageUrl } from "../../helpers/downloadUtils";
 
 export const Profile = () => {
   const { userId } = useParams();
 
   const [userInformation, setUserInformation] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [profileImage, setProfileImage] = useState(null);
+
+
+  const serveImageData = (url) => {
+    serveImage(url)
+      .then(response => {
+        if (response != null) {
+          setProfileImage(response.data);
+        }
+      });
+  }
 
   useEffect(() => {
     if (userId) {
@@ -34,12 +46,14 @@ export const Profile = () => {
           setIsLoading(false);
         }
       );
+      serveImageData(constructProfileImageUrl(userId));
     }
     else {
       UserService.whoami().then(
         response => {
           if (response != null) {
             setUserInformation(response);
+            serveImageData(constructProfileImageUrl(response.id));
             setIsLoading(false);
           }
         },
@@ -49,6 +63,7 @@ export const Profile = () => {
         }
       );
     }
+
   }, []);
 
   if (isLoading) {
@@ -91,6 +106,11 @@ export const Profile = () => {
               </ListGroup>
             </ListGroup>
           </Card.Body>
+        </Card>
+        <Card className="card-radius">
+          {profileImage &&
+            <Card.Img style={{ height: "auto", maxWidth: "1000px" }} variant="top" id="profilePicture" src={`data:image/jpeg;base64,${profileImage}`} />
+          }
         </Card>
         {
           userInformation.id ?

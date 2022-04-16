@@ -1,7 +1,7 @@
 
 import axios from "../axios";
 
-export default function downloadFile(url) {
+export function downloadFile(url) {
     if (url) {
         axios({
             url: url,
@@ -15,6 +15,23 @@ export default function downloadFile(url) {
             link.setAttribute('download', filenameAndExtension);
             document.body.appendChild(link);
             link.click();
+        });
+    }
+}
+
+export const baseURL = () => {
+     return "http://localhost:8080/api";
+};
+
+export const constructProfileImageUrl = (userId) => {
+    return `${baseURL()}/users/${userId}/profile-image/`
+}
+
+export function serveImage(url) {
+    if (url) {
+        return axios.get(url, null, { responseType: 'blob' })
+        .then((response) => {
+            return response;
         });
     }
 }

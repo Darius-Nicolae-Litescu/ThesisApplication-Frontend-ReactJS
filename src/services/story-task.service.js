@@ -21,7 +21,7 @@ class StoryTaskService {
   }
 
   addComment(content, storyTaskId, attachments) {
-    let formData = new FormData();
+    const formData = new FormData();
     formData.append("storyTaskId", storyTaskId);
     formData.append("content", content);
     if (attachments) {
@@ -29,9 +29,6 @@ class StoryTaskService {
         formData.append("commentAttachments", attachments[i]);
       }
     }
-    console.log(storyTaskId, content, attachments)
-    console.log(formData);
-
     return axios({
       method: "post",
       url: "story/task/comment",
@@ -40,8 +37,7 @@ class StoryTaskService {
     }).then((response) => {
       response.data = response.data.success;
       return response.data;
-    })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(JSON.stringify(error))
       });
   }

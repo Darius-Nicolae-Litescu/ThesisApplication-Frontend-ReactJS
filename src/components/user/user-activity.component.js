@@ -20,7 +20,7 @@ export const UserActivity = (props) => {
     if (status === "fetched") {
         return (
             <Container>
-                <Card style={{ width: "70%" }}>
+                <Card style={{ width: "100%" }}>
                     <Card.Header>
                         <Card.Title>User Activity</Card.Title>
                     </Card.Header>

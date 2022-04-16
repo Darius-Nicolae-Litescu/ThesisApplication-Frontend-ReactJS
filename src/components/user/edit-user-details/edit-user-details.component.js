@@ -15,9 +15,20 @@ import EditUserLeftBar from "./edit-user-details-left-bar.component"
 import { UserActivity } from "../user-activity.component";
 import "../center-spinner.css"
 import "../profile.css"
+import ChangeEmail from "./change-email.component";
+import ChangePassword from "./change-password.component";
+import ChangeProfilePicture from "./change-profile-picture.component";
+import { serveImage, constructProfileImageUrl } from "../../../helpers/downloadUtils";
+
 
 export const EditProfile = () => {
   const [userInformation, setUserInformation] = useState(null);
+
+  const [showChangeEmailComponent, setShowChangeEmailComponent] = useState(false);
+  const [showChangePasswordComponent, setShowChangePasswordComponent] = useState(false);
+  const [showChangeProfilePictureComponent, setShowChangeProfilePictureComponent] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate()
 
@@ -26,6 +37,12 @@ export const EditProfile = () => {
       response => {
         if (response != null) {
           setUserInformation(response);
+          serveImage(constructProfileImageUrl(response.id))
+            .then(response => {
+              if (response != null) {
+                setProfileImage(response.data);
+              }
+            });
           setIsLoading(false);
         }
       },
@@ -34,6 +51,7 @@ export const EditProfile = () => {
         setIsLoading(false);
       }
     );
+
   }, []);
 
   if (isLoading) {
@@ -44,10 +62,38 @@ export const EditProfile = () => {
     return navigate('/login');
   }
 
+  if (showChangeEmailComponent) {
+    return <Container className="container-card" style={{ marginLeft: "15%" }}>
+      <Card style={{ marginLeft: "15%", width: "50%" }}>
+        <ChangeEmail />
+      </Card>
+    </Container>
+  }
+
+  if (showChangePasswordComponent) {
+    return <Container className="container-card" style={{ marginLeft: "15%" }}>
+      <Card style={{ marginLeft: "15%", width: "50%" }}>
+        <ChangePassword />
+      </Card>
+    </Container>
+  }
+
+  if (showChangeProfilePictureComponent) {
+    return <Container className="container-card" style={{ marginLeft: "15%" }}>
+      <Card style={{ marginLeft: "15%", width: "50%" }}>
+        <ChangeProfilePicture />
+      </Card>
+    </Container>
+  }
+
   return (
     <Container className="container-card" style={{ marginLeft: "15%" }}>
-      <EditUserLeftBar></EditUserLeftBar>
-      <Card style={{ marginLeft: "15%", width: "50%" }}>
+      <EditUserLeftBar
+        setShowChangeEmailComponent={setShowChangeEmailComponent}
+        setShowChangePasswordComponent={setShowChangePasswordComponent}
+        setShowChangeProfilePictureComponent={setShowChangeProfilePictureComponent}
+      />
+      <Card style={{ marginLeft: "2%"}}>
         <Card.Header>
           <h3>Profile</h3>
         </Card.Header>
@@ -82,7 +128,14 @@ export const EditProfile = () => {
           </ListGroup>
         </Card.Body>
       </Card>
-      {userInformation.id ? <UserActivity userId={userInformation.id}></UserActivity> : null}
+      <Card className="card-radius">
+        {profileImage &&
+          <Card.Img style={{ height: "auto", maxWidth: "1000px" }} variant="top" id="profilePicture" src={`data:image/jpeg;base64,${profileImage}`} />
+        }
+      </Card>
+      {userInformation.id ?
+        <UserActivity userId={userInformation.id} /> : null
+      }
     </Container>
   );
 }
