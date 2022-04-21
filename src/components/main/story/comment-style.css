@@ -1,41 +1,41 @@
 .attachment {
-    margin: 13px 36px 15px 0px;
-    border-style: solid;
-    padding: .5em;
+  margin: 13px 36px 15px 0px;
+  border-style: solid;
+  padding: 0.5em;
 }
 
 .comment-font {
-    line-height: 22px;
-    font-weight: 400;
-    color: darkslategrey;
-    letter-spacing: 0.3px;
+  line-height: 22px;
+  font-weight: 400;
+  color: darkslategrey;
+  letter-spacing: 0.3px;
 }
 
 .container-full {
-    display: inline;
-    margin-top: 20px;
+  display: inline;
+  margin-top: 20px;
 }
 
 .image-style {
-    flex: 1;
-    width: 100px;
-    height: 100px;
+  flex: 1;
+  width: 100px;
+  height: 100px;
 }
 
 .bottom-container {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 10px;
-    display: grid;
-    align-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  display: grid;
+  align-content: center;
 }
 
 .date-attachment-moment-format {
-    font-size: 15px;
-    font: caption;
+  font-size: 15px;
+  font: caption;
 }
 
 .date-comment-moment-format {
-    font: caption;
+  font: caption;
 }

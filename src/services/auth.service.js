@@ -5,7 +5,7 @@ class AuthService {
     return axios
       .post("users/login", {
         username,
-        password
+        password,
       })
       .then((response) => {
         const loginResponse = response.data.success;

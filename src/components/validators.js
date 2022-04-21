@@ -7,4 +7,3 @@ const validateEmail = (email) => {
 };
 
 export { validateEmail as validateEmail };
-

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 import {
   BrowserRouter as Router,
@@ -16,13 +16,12 @@ import { getUserFromLocalStorage } from "../common/auth-verify";
 
 import AuthService from "../services/auth.service";
 
-
 export const Register = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const [successful, setSuccessful] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -33,11 +32,10 @@ export const Register = () => {
     const user = getUserFromLocalStorage();
     if (user) {
       setIsLoggedIn(true);
-    }
-    else {
+    } else {
       setIsLoggedIn(false);
     }
-  }, [])
+  }, []);
 
   const handleValidation = () => {
     if (username.length === 0) {
@@ -57,40 +55,42 @@ export const Register = () => {
       return false;
     }
     return true;
-  }
+  };
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
-  }
+  };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   const onChangeEmail = (e) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handleRegister = (e) => {
     if (handleValidation()) {
       setLoading(true);
       AuthService.register(username, email, password)
-        .then(response => {
-          if (response != null) {
-            navigate("/login");
-            setSuccessful(true);
-            setLoading(false)
-          }
-        },
-          error => {
+        .then(
+          (response) => {
+            if (response != null) {
+              navigate("/login");
+              setSuccessful(true);
+              setLoading(false);
+            }
+          },
+          (error) => {
             setMessageToDisplay(error);
             setLoading(false);
-          })
+          }
+        )
         .catch(() => {
           setLoading(false);
         });
     }
-  }
+  };
 
   if (isLoggedIn) {
     return navigate("/profile");
@@ -167,4 +167,4 @@ export const Register = () => {
       </div>
     </div>
   );
-}
+};

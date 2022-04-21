@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { history } from '../helpers/history';
+import { history } from "../helpers/history";
 
 const parseJwt = (token) => {
   try {
-    return JSON.parse(atob(token.split('.')[1]));
+    return JSON.parse(atob(token.split(".")[1]));
   } catch (e) {
     return null;
   }
@@ -34,5 +34,5 @@ export default function AuthVerify(props) {
       }
     }
   });
-  return (<div></div>);
+  return <div></div>;
 }

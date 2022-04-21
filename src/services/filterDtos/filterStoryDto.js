@@ -1,5 +1,15 @@
 export default class FilterStoryDto {
-  constructor(title, description, category, priorityId, priorityTitle, priorityDescription, priorityLevel, softwareApplicationName, softwareApplicationDescription) {
+  constructor(
+    title,
+    description,
+    category,
+    priorityId,
+    priorityTitle,
+    priorityDescription,
+    priorityLevel,
+    softwareApplicationName,
+    softwareApplicationDescription
+  ) {
     this.title = title;
     this.description = description;
     this.category = category;

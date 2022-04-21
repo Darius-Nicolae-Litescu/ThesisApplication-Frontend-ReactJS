@@ -1,9 +1,8 @@
 import React from "react";
-import { useState, useEffect } from 'react';
-import { withTheme } from '@rjsf/core';
-import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
-import FilterCommentDto from '../../../services/filterDtos/filterCommentDto'
-
+import { useState, useEffect } from "react";
+import { withTheme } from "@rjsf/core";
+import { Theme as Bootstrap4Theme } from "@rjsf/bootstrap-4";
+import FilterCommentDto from "../../../services/filterDtos/filterCommentDto";
 
 const Form = withTheme(Bootstrap4Theme);
 
@@ -14,9 +13,9 @@ const commentSchema = {
   properties: {
     content: {
       type: "string",
-      title: "Content"
-    }
-  }
+      title: "Content",
+    },
+  },
 };
 
 export const CommentFilter = (props) => {
@@ -29,7 +28,7 @@ export const CommentFilter = (props) => {
 
     setKeepFormData({ ...keepFormData, commentFilterFormData: formData });
     setCommentFilter(filterCommentDto);
-  }
+  };
 
   const keepFormDataLogic = () => {
     if (keepFormData) {
@@ -38,13 +37,19 @@ export const CommentFilter = (props) => {
       }
     }
     return {};
-  }
+  };
 
   return (
     <div className="CommentFilter">
-      <Form schema={commentSchema} formData={keepFormDataLogic()} onSubmit={getFilterValues} >
-        <button className="FilterButton" type="submit">Filter</button>
+      <Form
+        schema={commentSchema}
+        formData={keepFormDataLogic()}
+        onSubmit={getFilterValues}
+      >
+        <button className="FilterButton" type="submit">
+          Filter
+        </button>
       </Form>
     </div>
   );
-}
+};

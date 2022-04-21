@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from 'react';
-import { withTheme } from '@rjsf/core';
-import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
-import FilterUserDto from '../../../services/filterDtos/filterUserDto'
+import { useState, useEffect } from "react";
+import { withTheme } from "@rjsf/core";
+import { Theme as Bootstrap4Theme } from "@rjsf/bootstrap-4";
+import FilterUserDto from "../../../services/filterDtos/filterUserDto";
 
 const Form = withTheme(Bootstrap4Theme);
 
@@ -13,13 +13,13 @@ const userSchema = {
   properties: {
     username: {
       type: "string",
-      title: "username"
+      title: "username",
     },
     email: {
       type: "string",
-      title: "email"
-    }
-  }
+      title: "email",
+    },
+  },
 };
 
 export const UserFilter = (props) => {
@@ -32,8 +32,7 @@ export const UserFilter = (props) => {
 
     setKeepFormData({ ...keepFormData, userFilterFormData: formData });
     setUserFilter(filterUserDto);
-  }
-
+  };
 
   const keepFormDataLogic = () => {
     if (keepFormData) {
@@ -42,13 +41,19 @@ export const UserFilter = (props) => {
       }
     }
     return {};
-  }
+  };
 
   return (
     <div className="UserFilter">
-      <Form schema={userSchema} formData={keepFormDataLogic()} onSubmit={getFilterValues} >
-        <button className="FilterButton" type="submit">Filter</button>
+      <Form
+        schema={userSchema}
+        formData={keepFormDataLogic()}
+        onSubmit={getFilterValues}
+      >
+        <button className="FilterButton" type="submit">
+          Filter
+        </button>
       </Form>
     </div>
   );
-}
+};

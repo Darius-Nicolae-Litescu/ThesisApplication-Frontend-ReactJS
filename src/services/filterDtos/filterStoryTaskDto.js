@@ -1,5 +1,12 @@
 export default class FilterStoryTaskDto {
-  constructor(title, description, storyPoints, createdByUsername, assignedToUsername, status) {
+  constructor(
+    title,
+    description,
+    storyPoints,
+    createdByUsername,
+    assignedToUsername,
+    status
+  ) {
     this.title = title;
     this.description = description;
     this.storyPoints = storyPoints;

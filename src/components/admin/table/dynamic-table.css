@@ -1,14 +1,14 @@
 .GenericTable {
-    margin-top: 5%;
-    margin-left: 10%;
-    word-break: break-word;
-    display: grid;
-    justify-items: end;
+  margin-top: 5%;
+  margin-left: 10%;
+  word-break: break-word;
+  display: grid;
+  justify-items: end;
 }
 
 .action-buttons {
-    display: inline-flex;
-    align-items: stretch;
-    flex-wrap: nowrap;
-    flex-direction: column;
+  display: inline-flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  flex-direction: column;
 }

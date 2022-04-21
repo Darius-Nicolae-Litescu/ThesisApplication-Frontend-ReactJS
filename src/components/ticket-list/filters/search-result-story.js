@@ -1,8 +1,8 @@
 import React from "react";
-import { useState, useEffect } from 'react';
-import { withTheme } from '@rjsf/core';
-import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
-import FilterStoryDto from '../../../services/filterDtos/filterStoryDto'
+import { useState, useEffect } from "react";
+import { withTheme } from "@rjsf/core";
+import { Theme as Bootstrap4Theme } from "@rjsf/bootstrap-4";
+import FilterStoryDto from "../../../services/filterDtos/filterStoryDto";
 
 const Form = withTheme(Bootstrap4Theme);
 
@@ -13,37 +13,37 @@ const storySchema = {
   properties: {
     title: {
       type: "string",
-      title: "Title"
+      title: "Title",
     },
     description: {
       type: "string",
-      title: "Description"
+      title: "Description",
     },
     category: {
       type: "string",
-      title: "Category"
+      title: "Category",
     },
     priorityTitle: {
       type: "string",
-      title: "Priority Title"
+      title: "Priority Title",
     },
     priorityDescription: {
       type: "string",
-      title: "Priority Description"
+      title: "Priority Description",
     },
     priorityLevel: {
       type: "number",
-      title: "Priority Level"
+      title: "Priority Level",
     },
     softwareApplicationName: {
       type: "string",
-      title: "Software Application Name"
+      title: "Software Application Name",
     },
     softwareApplicationDescription: {
       type: "string",
-      title: "Software Application Description"
-    }
-  }
+      title: "Software Application Description",
+    },
+  },
 };
 
 export const StoryFilter = (props) => {
@@ -52,13 +52,21 @@ export const StoryFilter = (props) => {
   const [formData, setFormData] = useState();
 
   const getFilterValues = ({ formData }) => {
-    let filterStoryDto = new FilterStoryDto(formData.title, formData.description, formData.category, formData.priorityId,
-      formData.priorityTitle, formData.priorityDescription, formData.priorityLevel,
-      formData.softwareApplicationName, formData.softwareApplicationDescription);
+    let filterStoryDto = new FilterStoryDto(
+      formData.title,
+      formData.description,
+      formData.category,
+      formData.priorityId,
+      formData.priorityTitle,
+      formData.priorityDescription,
+      formData.priorityLevel,
+      formData.softwareApplicationName,
+      formData.softwareApplicationDescription
+    );
 
     setKeepFormData({ ...keepFormData, storyFilterFormData: formData });
     setStoryFilter(filterStoryDto);
-  }
+  };
 
   const keepFormDataLogic = () => {
     if (keepFormData) {
@@ -67,13 +75,19 @@ export const StoryFilter = (props) => {
       }
     }
     return {};
-  }
+  };
 
   return (
     <div className="StoryFilter">
-      <Form schema={storySchema} formData={keepFormDataLogic()} onSubmit={getFilterValues} >
-        <button className="FilterButton" type="submit">Filter</button>
+      <Form
+        schema={storySchema}
+        formData={keepFormDataLogic()}
+        onSubmit={getFilterValues}
+      >
+        <button className="FilterButton" type="submit">
+          Filter
+        </button>
       </Form>
     </div>
   );
-}
+};

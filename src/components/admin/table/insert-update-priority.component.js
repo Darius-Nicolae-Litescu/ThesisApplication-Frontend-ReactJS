@@ -1,48 +1,44 @@
 import React from "react";
 
-import { withTheme } from '@rjsf/core';
-import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
+import { withTheme } from "@rjsf/core";
+import { Theme as Bootstrap4Theme } from "@rjsf/bootstrap-4";
 const Form = withTheme(Bootstrap4Theme);
 
 const JSONSchema = {
-  "title": "Insert or update a priority",
-  "description": "You can update or insert a priority",
-  "type": "object",
-  "required": [
-    "title",
-    "description",
-    "level"
-  ],
-  "properties": {
-    "title": {
-      "type": "string",
-      "title": "Title"
+  title: "Insert or update a priority",
+  description: "You can update or insert a priority",
+  type: "object",
+  required: ["title", "description", "level"],
+  properties: {
+    title: {
+      type: "string",
+      title: "Title",
     },
-    "description": {
-      "type": "string",
-      "title": "Description"
+    description: {
+      type: "string",
+      title: "Description",
     },
-    "level": {
-      "type": "number",
-      "title": "Level"
-    }
-  }
+    level: {
+      type: "number",
+      title: "Level",
+    },
+  },
 };
 
 const UISchema = {
-  "title": {
+  title: {
     "ui:autofocus": true,
     "ui:emptyValue": "",
-    "ui:autocomplete": "title-name"
+    "ui:autocomplete": "title-name",
   },
-  "description": {
+  description: {
     "ui:emptyValue": "",
-    "ui:autocomplete": "description"
+    "ui:autocomplete": "description",
   },
-  "level": {
+  level: {
     "ui:emptyValue": "",
-    "ui:autocomplete": "priority-level"
-  }
+    "ui:autocomplete": "priority-level",
+  },
 };
 
 function InsertUpdatePriorityForm() {
@@ -54,5 +50,3 @@ function InsertUpdatePriorityForm() {
 }
 
 export default InsertUpdatePriorityForm;
-
-

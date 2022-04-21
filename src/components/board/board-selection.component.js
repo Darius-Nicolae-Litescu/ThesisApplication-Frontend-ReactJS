@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Link,
@@ -7,17 +7,16 @@ import {
   Routes,
   useParams,
 } from "react-router-dom";
-import { Board } from './board.component'
+import { Board } from "./board.component";
 import { AsyncTypeahead } from "react-bootstrap-typeahead";
-import { FetchBoardsData } from '../hooks/fetch-boards';
-import Container from 'react-bootstrap/Container';
+import { FetchBoardsData } from "../hooks/fetch-boards";
+import Container from "react-bootstrap/Container";
 import AddBoardForm from "./form/insert-board-form";
 import { Button } from "react-bootstrap";
-import "./board-selection.css"
+import "./board-selection.css";
 //ToDo: Live search instead of get all boards
 
 export const BoardSelection = (props) => {
-
   const { status, data, error } = FetchBoardsData();
 
   const [enableBoardForm, setEnableBoardForm] = useState(false);
@@ -25,10 +24,16 @@ export const BoardSelection = (props) => {
     window.open("/kanban-board/" + boardId);
   };
 
-
   return (
     <Container>
-      <Button className="AddBoardButton" onClick={() => { setEnableBoardForm(!enableBoardForm) }}>Add board</Button>
+      <Button
+        className="AddBoardButton"
+        onClick={() => {
+          setEnableBoardForm(!enableBoardForm);
+        }}
+      >
+        Add board
+      </Button>
       <div className="board-selection">
         <AsyncTypeahead
           id="board-selection"
@@ -47,8 +52,7 @@ export const BoardSelection = (props) => {
             if (selected.length > 0) {
               openBoard(openBoard(selected[0].id));
             }
-          }
-          }
+          }}
         />
       </div>
       <div className="AddBoardForm">
@@ -56,4 +60,4 @@ export const BoardSelection = (props) => {
       </div>
     </Container>
   );
-}
+};

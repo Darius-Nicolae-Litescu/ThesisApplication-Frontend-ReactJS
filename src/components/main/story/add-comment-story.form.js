@@ -1,13 +1,13 @@
 import React from "react";
 import { Component } from "react";
 import { Container } from "react-bootstrap";
-import { TextField, Button } from 'react-bootstrap'
+import { TextField, Button } from "react-bootstrap";
 
 import { useParams } from "react-router";
-import { withTheme } from '@rjsf/core';
+import { withTheme } from "@rjsf/core";
 import StoryService from "../../../services/story.service";
-import TextareaAutosize from 'react-textarea-autosize';
-import isEmpty from "../../../helpers/stringUtils"
+import TextareaAutosize from "react-textarea-autosize";
+import isEmpty from "../../../helpers/stringUtils";
 
 export default class AddComment extends Component {
   constructor(props) {
@@ -23,7 +23,6 @@ export default class AddComment extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.fileToDataURL = this.fileToDataURL.bind(this);
     this.handleChange = this.handleChange.bind(this);
-
   }
 
   fileToDataURL(event) {
@@ -31,14 +30,14 @@ export default class AddComment extends Component {
       progress: 0,
       currentFiles: event.target.files,
     });
-  };
+  }
 
   handleChange(event) {
-    if (this.state.comment === '') {
+    if (this.state.comment === "") {
       this.setState({ message: null });
     }
     this.setState({
-      comment: event.target.value
+      comment: event.target.value,
     });
   }
 
@@ -55,12 +54,11 @@ export default class AddComment extends Component {
     const comment = this.state.comment;
 
     if (this.state.comment) {
-      this.state.message = ""
+      this.state.message = "";
       StoryService.addComment(comment, storyId, files)
         .then((response) => {
           this.props.refreshComments(response);
           console.log(response);
-
         })
         .catch(() => {
           this.setState({
@@ -70,30 +68,33 @@ export default class AddComment extends Component {
       this.setState({
         selectedFiles: undefined,
       });
-    };
+    }
   }
 
   render() {
     return (
       <Container>
         <h2>Add a comment</h2>
-        <TextareaAutosize onChange={this.handleChange} style={{ width: "100%" }} maxRows={50} minRows={5}></TextareaAutosize>
-        <input multiple="multiple" type='file' name='files[]' onChange={(event) => this.fileToDataURL(event)}></input>
+        <TextareaAutosize
+          onChange={this.handleChange}
+          style={{ width: "100%" }}
+          maxRows={50}
+          minRows={5}
+        ></TextareaAutosize>
+        <input
+          multiple="multiple"
+          type="file"
+          name="files[]"
+          onChange={(event) => this.fileToDataURL(event)}
+        ></input>
         <div>
           <br></br>
-          <Button onClick={this.handleSubmit} variant="primary">Add comment</Button>{' '}
+          <Button onClick={this.handleSubmit} variant="primary">
+            Add comment
+          </Button>{" "}
         </div>
-        {this.state.message && (
-          <p className="error"> {this.state.message} </p>
-        )}
+        {this.state.message && <p className="error"> {this.state.message} </p>}
       </Container>
     );
   }
-
 }
-
-
-
-
-
-

@@ -1,24 +1,20 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
-import {
-  BrowserRouter as Router,
-  useNavigate,
-} from "react-router-dom";
-import { Navigate } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { Button } from "react-bootstrap";
 import Input from "react-validation/build/input";
 import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../services/auth.service";
 import { getUserFromLocalStorage } from "../common/auth-verify";
 
-
 export const Login = () => {
   const navigate = useNavigate();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [messageToDisplay, setMessageToDisplay] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -27,11 +23,10 @@ export const Login = () => {
     const user = getUserFromLocalStorage();
     if (user) {
       setIsLoggedIn(true);
-    }
-    else {
+    } else {
       setIsLoggedIn(false);
     }
-  }, [])
+  }, []);
 
   const handleValidation = () => {
     if (username.length === 0) {
@@ -43,39 +38,42 @@ export const Login = () => {
       return false;
     }
     return true;
-  }
+  };
 
   const onChangeUsername = (e) => {
     setUsername(e.target.value);
-  }
+  };
 
   const onChangePassword = (e) => {
     setPassword(e.target.value);
-  }
+  };
 
   const refreshPage = () => {
     window.location.reload();
-  }
+  };
 
   const handleLogin = (e) => {
     e.preventDefault();
     if (handleValidation()) {
       setLoading(true);
-      AuthService.login(username, password).then(response => {
-        if (response != null) {
-          navigate("/profile");
-          refreshPage();
-        }
-      },
-        error => {
-          setMessageToDisplay(error);
-          setLoading(false);
-        })
+      AuthService.login(username, password)
+        .then(
+          (response) => {
+            if (response != null) {
+              navigate("/profile");
+              refreshPage();
+            }
+          },
+          (error) => {
+            setMessageToDisplay(error);
+            setLoading(false);
+          }
+        )
         .catch(() => {
           setLoading(false);
         });
-    };
-  }
+    }
+  };
 
   if (isLoggedIn) {
     return <Navigate to="/profile" />;
@@ -98,9 +96,7 @@ export const Login = () => {
           </div>
         )}
 
-        <Form
-          onSubmit={handleLogin}
-        >
+        <Form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <Input
@@ -128,7 +124,11 @@ export const Login = () => {
           </div>
           <br></br>
           <div className="form-group">
-            <Button type='submit' variant="primary" size="col-sm-6" style={{ width: "100%" }}
+            <Button
+              type="submit"
+              variant="primary"
+              size="col-sm-6"
+              style={{ width: "100%" }}
               disabled={loading}
             >
               {loading && (
@@ -141,4 +141,4 @@ export const Login = () => {
       </div>
     </div>
   );
-}
+};

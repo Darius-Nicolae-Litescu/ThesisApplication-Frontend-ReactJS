@@ -1,9 +1,8 @@
 import React from "react";
-import { useState, useEffect } from 'react';
-import { withTheme } from '@rjsf/core';
-import { Theme as Bootstrap4Theme } from '@rjsf/bootstrap-4';
-import FilterSoftwareApplicationDto from '../../../services/filterDtos/filterSoftwareApplicationDto'
-
+import { useState, useEffect } from "react";
+import { withTheme } from "@rjsf/core";
+import { Theme as Bootstrap4Theme } from "@rjsf/bootstrap-4";
+import FilterSoftwareApplicationDto from "../../../services/filterDtos/filterSoftwareApplicationDto";
 
 const Form = withTheme(Bootstrap4Theme);
 
@@ -14,13 +13,13 @@ const softwareApplicationSchema = {
   properties: {
     name: {
       type: "string",
-      title: "Name"
+      title: "Name",
     },
     description: {
       type: "string",
-      title: "Description"
-    }
-  }
+      title: "Description",
+    },
+  },
 };
 
 export const SoftwareApplicationFilter = (props) => {
@@ -28,11 +27,17 @@ export const SoftwareApplicationFilter = (props) => {
 
   const [filterValue, setFilterValue] = useState();
   const getFilterValues = ({ formData }) => {
-    let filterSoftwareApplicationDto = new FilterSoftwareApplicationDto(formData.name, formData.description);
+    let filterSoftwareApplicationDto = new FilterSoftwareApplicationDto(
+      formData.name,
+      formData.description
+    );
 
-    setKeepFormData({ ...keepFormData, softwareApplicationFilterFormData: formData });
+    setKeepFormData({
+      ...keepFormData,
+      softwareApplicationFilterFormData: formData,
+    });
     setSoftwareApplicationFilter(filterSoftwareApplicationDto);
-  }
+  };
 
   const keepFormDataLogic = () => {
     if (keepFormData) {
@@ -41,13 +46,19 @@ export const SoftwareApplicationFilter = (props) => {
       }
     }
     return {};
-  }
+  };
 
   return (
     <div className="SoftwareApplicationFilter">
-      <Form schema={softwareApplicationSchema} formData={keepFormDataLogic()} onSubmit={getFilterValues} >
-        <button className="FilterButton" type="submit">Filter</button>
+      <Form
+        schema={softwareApplicationSchema}
+        formData={keepFormDataLogic()}
+        onSubmit={getFilterValues}
+      >
+        <button className="FilterButton" type="submit">
+          Filter
+        </button>
       </Form>
     </div>
   );
-}
+};

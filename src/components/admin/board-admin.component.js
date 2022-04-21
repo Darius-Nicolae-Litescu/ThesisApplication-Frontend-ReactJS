@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Link,
@@ -11,7 +11,5 @@ import {
 import AdminPanelDropdown from "./admin-panel-dropdown.component";
 
 export const BoardAdmin = () => {
-  return (
-    <AdminPanelDropdown />
-  );
-}
+  return <AdminPanelDropdown />;
+};
