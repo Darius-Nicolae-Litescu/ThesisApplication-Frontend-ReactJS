@@ -8,7 +8,7 @@ export default function SubtaskList(props) {
     <Container>
       <h5 className="text-muted mb-4">
         {" "}
-        Subtask{props.storySubtasks.length > 0 ? "s count: " : " count : "}
+        Subtask{props.storySubtasks.length > 0 ? " count: " : " count : "}
         <span>{props.storySubtasks.length}</span>
       </h5>
       <div className="subtaskList">

@@ -12,7 +12,7 @@ import Moment from "react-moment";
 import { Image, Container, Card, Button } from "react-bootstrap";
 import { FileIcon, defaultStyles } from "react-file-icon";
 import { downloadFile } from "../../../helpers/downloadUtils";
-
+import { Form } from "react-bootstrap";
 import StoryTaskService from "../../../services/story-task.service";
 
 import "./story-task-general-info.css";
@@ -33,7 +33,7 @@ export default function StoryGeneralInfo(props) {
 
   const [currentAssignedToUsername, setCurrentAssignedToUsername] =
     useState(assignedToUsername);
-  const [currentFinishedAt, setCurrentFinishedAt] = useState(finishedAt);
+  const [currentFinishedAt, setCurrentFinishedAt] = useState(finishedAt ? new Date(finishedAt).toISOString().slice(0, 10) : '');
   const [currentStatus, setCurrentStatus] = useState(status);
   const [currentStoryPoints, setCurrentStoryPoints] = useState(storyPoints);
 
@@ -48,13 +48,13 @@ export default function StoryGeneralInfo(props) {
       currentStoryPoints,
       currentAssignedToUsername,
       currentStatus,
-      currentFinishedAt
+      currentFinishedAt ? new Date(currentFinishedAt) : null
     ).then(
       (response) => {
         if (response != null) {
           setData(response.data);
           props.updateData(data);
-          console.log(response);
+          toggleEditMode();
         }
       },
       (error) => {
@@ -121,12 +121,28 @@ export default function StoryGeneralInfo(props) {
         />
         <br></br>
         <label>Finished </label>
-        <input
-          className="input-general"
-          onChange={(e) => setCurrentFinishedAt(e.target.value)}
-          value={currentFinishedAt ? "Finished" : "Not finished"}
-          disabled={!isEditActive}
-        />
+        <div className="finalize-date-picker">
+          <input
+            style={{ width: "300px" }}
+            className="input-general"
+            onChange={(e) => setCurrentFinishedAt(e.target.value)}
+            value={
+              currentFinishedAt
+                ? "Finished at: " + currentFinishedAt
+                : "Not finished"
+            }
+            disabled={!isEditActive}
+          />
+
+          <Form.Control
+            value={currentFinishedAt}
+            disabled={!isEditActive}
+            type="date"
+            name="finished_at"
+            onChange={(e) => setCurrentFinishedAt(e.target.value)}
+          />
+        </div>
+
         {error && (
           <div style={{ color: "red" }}>
             Could not update details, check console for more info

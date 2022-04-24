@@ -29,8 +29,7 @@ class BoardService {
     return axios
       .put("board/", board)
       .then((response) => {
-        response.data = response.data.success;
-        return response.data;
+        return response;
       })
       .catch(function (error) {
         console.log(JSON.stringify(error));

@@ -9,11 +9,14 @@ class AuthService {
       })
       .then((response) => {
         const loginResponse = response.data.success;
-        if (loginResponse.jwtToken) {
+        if (loginResponse && loginResponse.jwtToken) {
           if (setUserToLocalStorage(loginResponse)) {
             return loginResponse;
           }
         }
+      })
+      .catch(function (error) {
+        console.log(JSON.stringify(error));
       });
   }
 

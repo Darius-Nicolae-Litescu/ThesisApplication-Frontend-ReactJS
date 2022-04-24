@@ -25,7 +25,13 @@ export const UserActivity = (props) => {
   }
 
   if (status === "fetched") {
-    return (
+    return data.length === 0 ? (
+      <Container>
+        <Card style={{ width: "100%" }}>
+          <Card.Header>No activity found</Card.Header>
+        </Card>
+      </Container>
+    ) : (
       <Container>
         <Card style={{ width: "100%" }}>
           <Card.Header>

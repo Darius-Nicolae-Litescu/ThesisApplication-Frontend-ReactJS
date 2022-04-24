@@ -25,7 +25,7 @@ export const BoardSelection = (props) => {
   };
 
   return (
-    <Container>
+    <Container className="Search">
       <Button
         className="AddBoardButton"
         onClick={() => {

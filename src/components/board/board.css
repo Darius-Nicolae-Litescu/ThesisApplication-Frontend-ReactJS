@@ -33,6 +33,11 @@
   margin: 10px 10px 10px 10px;
 }
 
+.changes-error-wrapper {
+  display: inline-grid;
+  justify-items: end;
+}
+
 .board {
   width: 95%;
   margin-left: auto;

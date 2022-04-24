@@ -154,16 +154,16 @@ export const EditProfile = () => {
           </ListGroup>
         </Card.Body>
       </Card>
-      <Card className="card-radius">
-        {profileImage && (
+      {profileImage && (
+        <Card className="card-radius">
           <Card.Img
             style={{ height: "auto", maxWidth: "1000px" }}
             variant="top"
             id="profilePicture"
             src={`data:image/jpeg;base64,${profileImage}`}
           />
-        )}
-      </Card>
+        </Card>
+      )}
       {userInformation.id ? <UserActivity userId={userInformation.id} /> : null}
     </Container>
   );

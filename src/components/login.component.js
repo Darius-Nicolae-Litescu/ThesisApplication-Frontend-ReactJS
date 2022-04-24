@@ -59,7 +59,7 @@ export const Login = () => {
       AuthService.login(username, password)
         .then(
           (response) => {
-            if (response != null) {
+            if (response.jwtToken != null) {
               navigate("/profile");
               refreshPage();
             }
@@ -70,6 +70,7 @@ export const Login = () => {
           }
         )
         .catch(() => {
+          setMessageToDisplay("Wrong username/password");
           setLoading(false);
         });
     }

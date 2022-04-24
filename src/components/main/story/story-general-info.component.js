@@ -28,6 +28,7 @@ export default function StoryGeneralInfo(props) {
     isFinished,
     totalStoryPoints,
   } = props.storyGeneralInfo;
+  
   const {
     fetchPriorityDataStatus,
     data: priorityData,
@@ -107,7 +108,7 @@ export default function StoryGeneralInfo(props) {
         ></img>
       </div>
       <div className="card-block px-2">
-        <h4 className="card-title">Story task general information:</h4>
+        <h4 className="card-title">Story general information:</h4>
         <p className="card-text">Created by username: {createdBy.username}</p>
         <p className="card-text">Finished: {isFinished ? "Yes" : "No"}</p>
         <p className="card-text">

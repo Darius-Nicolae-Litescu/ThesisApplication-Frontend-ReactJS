@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useReducer, Fragment } from "react";
-import Button from "react-bootstrap/Button";
+import { Button, Container } from "react-bootstrap";
 import {
   BrowserRouter as Router,
   Link,
@@ -13,6 +13,9 @@ import "./board.css";
 
 export default function SubmitBoardChanges(props) {
   const { boardId, columns, updateColumns } = props;
+
+  const [error, setError] = useState(null);
+
   const updateBoard = () => {
     const newColumns = columns.map((column) => {
       const newCards = column.cards.map((card) => {
@@ -30,7 +33,11 @@ export default function SubmitBoardChanges(props) {
     BoardService.updateBoard({ id: boardId, columnList: newColumns }).then(
       (response) => {
         if (response != null) {
-          updateColumns(response.columnList);
+          if (!response.data.success) {
+            setError(response.data.message);
+          } else {
+            updateColumns(response.data.success.columnList);
+          }
         }
       },
       (error) => {
@@ -40,8 +47,15 @@ export default function SubmitBoardChanges(props) {
   };
 
   return (
-    <Button onClick={() => updateBoard()} className="submit-changes-button">
-      Save changes
-    </Button>
+    <div className="changes-error-wrapper">
+      <Button onClick={() => updateBoard()} className="submit-changes-button">
+        Save changes
+      </Button>
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          {error}
+        </div>
+      )}
+    </div>
   );
 }

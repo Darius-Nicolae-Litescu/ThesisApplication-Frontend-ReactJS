@@ -7,7 +7,6 @@ import {
   Route,
   Routes,
   useParams,
-  useNavigate,
 } from "react-router-dom";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -17,7 +16,6 @@ import { getUserFromLocalStorage } from "../common/auth-verify";
 import AuthService from "../services/auth.service";
 
 export const Register = () => {
-  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -69,14 +67,22 @@ export const Register = () => {
     setEmail(e.target.value);
   };
 
+  const navigateToLogin = () => {
+    window.location.href = "/login";
+  };
+
+  const navigateToProfile = () => {
+    window.location.href = "/profile";
+  };
+
   const handleRegister = (e) => {
     if (handleValidation()) {
       setLoading(true);
       AuthService.register(username, email, password)
         .then(
           (response) => {
-            if (response != null) {
-              navigate("/login");
+            if (response.data !== null) {
+              navigateToLogin();
               setSuccessful(true);
               setLoading(false);
             }
@@ -93,7 +99,7 @@ export const Register = () => {
   };
 
   if (isLoggedIn) {
-    return navigate("/profile");
+    return navigateToProfile();
   }
 
   return (

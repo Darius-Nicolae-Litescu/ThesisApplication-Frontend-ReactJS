@@ -9,8 +9,6 @@ import {
 import { Login } from "./components/login.component";
 import { Statistics } from "./components/statistics/statistics.component";
 import { Register } from "./components/register.component";
-import BoardUser from "./components/board-user.component";
-import BoardModerator from "./components/board-moderator.component";
 import { BoardAdmin } from "./components/admin/board-admin.component";
 import { EditProfile } from "./components/user/edit-user-details/edit-user-details.component";
 import { Container } from "react-bootstrap";
@@ -39,20 +37,24 @@ export const App = () => {
     <Container id="main-container">
       <MainComponent />
       <Routes>
-        <Route exact path="/" element={<MainComponent />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="/statistics" element={<Statistics />} />
         <Route exact path="/profile/:userId" element={<Profile />} />
         <Route exact path="/edit/user" element={<EditProfile />} />
+        <Route exact path="/ticket-list" element={<TicketList />} />
+        <Route exact path="/add-story" element={<AddStory />} />
+        <Route path="/admin" element={<BoardAdmin />} />
+        <Route path="story/:storyId" element={<Story />} />
+        <Route path="story-task/:storyTaskId" element={<StoryTask />} />
+        <Route path="kanban-board" element={<BoardSelection />} />
+        <Route path="kanban-board/:boardId" element={<Board />} />
         <Route
           exact
           path="/search-result/:searchTerm"
           element={<SearchResult />}
         />
-        <Route exact path="/ticket-list" element={<TicketList />} />
-        <Route exact path="/add-story" element={<AddStory />} />
         <Route
           exact
           path="/add-story-task/:storyId"
@@ -118,13 +120,6 @@ export const App = () => {
           path="/add-update-employee/:employeeId"
           element={<AddOrUpdateEmployee />}
         />
-        <Route path="/user" element={<BoardUser />} />
-        <Route path="/mod" element={<BoardModerator />} />
-        <Route path="/admin" element={<BoardAdmin />} />
-        <Route path="story/:storyId" element={<Story />} />
-        <Route path="story-task/:storyTaskId" element={<StoryTask />} />
-        <Route path="kanban-board" element={<BoardSelection />} />
-        <Route path="kanban-board/:boardId" element={<Board />} />
       </Routes>
     </Container>
   );
