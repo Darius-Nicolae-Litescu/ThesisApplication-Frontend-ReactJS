@@ -14,7 +14,6 @@ import Container from "react-bootstrap/Container";
 import AddBoardForm from "./form/insert-board-form";
 import { Button } from "react-bootstrap";
 import "./board-selection.css";
-//ToDo: Live search instead of get all boards
 
 export const BoardSelection = (props) => {
   const { status, data, error } = FetchBoardsData();

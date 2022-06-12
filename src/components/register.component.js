@@ -16,7 +16,6 @@ import { getUserFromLocalStorage } from "../common/auth-verify";
 import AuthService from "../services/auth.service";
 
 export const Register = () => {
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
